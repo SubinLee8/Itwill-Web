@@ -6,7 +6,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,10 +14,10 @@ import com.itwill.jsp2.domain.Post;
 import com.itwill.jsp2.service.PostService;
 
 /**
- * Servlet implementation class PostListController
+ * Servlet implementation class PostModifyController
  */
-@WebServlet(name = "postListController", urlPatterns = { "/post/list" })
-public class PostListController extends HttpServlet {
+@WebServlet(name = "postModifyController", urlPatterns = { "/post/modify" })
+public class PostModifyController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger log= LoggerFactory.getLogger(PostListController.class);
 	private final PostService postService = PostService.INSTANCE;
@@ -26,27 +25,28 @@ public class PostListController extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public PostListController() {
-    	
+    public PostModifyController() {
+        
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-    @Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		log.debug("doGet()");
+		//질의 문자열의 요청 파라미터 id의 값을 먼저 읽음.
+		int id=Integer.parseInt(request.getParameter("id"));
+		log.debug("doGet id={}",id);
 		
-		//서비스 계층의 메서드를 호출해서 뷰(테이블)을 그릴 수 있는 데이터를 읽어옴.
-		List<Post> list=postService.read();
-		log.debug("# of list = {} ",list.size());
+		//서비스 계층의 메서드를 호출해서 수정하기 전의 포스트상세보기 내용을 읽어옴.
+		Post post=postService.read(id);
 		
-		//데이터를 뷰에 전달.
-		request.setAttribute("posts", list);
+		//post객체를 요청의 attribute에 추가.
+		request.setAttribute("post", post);
 		
-		//뷰로 이동(forward 이동)
-		request.getRequestDispatcher("/WEB-INF/views/post/list.jsp").forward(request, response);
+		//뷰로 이동.
+		request.getRequestDispatcher("/WEB-INF/views/post/modify.jsp").forward(request, response);
+		
 	}
-    
-   
+
+	
 }
