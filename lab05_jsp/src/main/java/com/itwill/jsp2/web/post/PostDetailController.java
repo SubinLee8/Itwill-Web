@@ -44,6 +44,7 @@ public class PostDetailController extends HttpServlet {
     	//글 상세정보를 뷰에 전달.
     	Post post=postService.read(id);
     	request.setAttribute("post", post);
+    	log.debug(post.toString());
     	
     	//포워드
     	request.getRequestDispatcher("/WEB-INF/views/post/details.jsp").forward(request, response);

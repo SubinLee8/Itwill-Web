@@ -34,4 +34,25 @@ public enum PostService {
 		log.debug("read(id)");
 		return postDao.select(id);
 	}
+
+	public int delete(int id) {
+		log.debug("delete()(id={})",id);
+		int result=postDao.delete(id);
+		log.debug("delete result:{}",result);
+		return result;
+		
+	}
+
+	public int update(Post post) {
+		int result=postDao.update(post);
+		return result;
+		
+	}
+
+	public List<Post> search(String category, String keyword) {
+		return postDao.select(category,keyword);
+	}
+
+	
+	
 }

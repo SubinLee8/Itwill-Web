@@ -30,22 +30,22 @@
 
                     <div class="card-body">
                         <form id="modifyForm">
-                            <c:set var="post" value="${post}"></c:set>
+                           
                             <div class="mt-2 d-none">
                                 <label class="form-label " for="id">번호</label> <input
                                     class="form-control" name="id"
                                     id="id" type="text"
-                                    value=${ post.id} readonly />
+                                    value=${post.id} readonly />
                             </div>
                             <div class="mt-2">
                                 <label class="form-label"  for="title">제목</label> <input
                                     id="title" type="text"  class="form-control"  name="title" autofocus
-                                    value=${ post.title} />
+                                    value=${post.title} />
                             </div>
                             <div class="mt-2 d-none">
                                 <label class="form-label "  for="author">작성자</label> <input
                                     id="author" type="text" class="form-control"
-                                    value=${post.author } readonly />
+                                    value=${post.author} readonly />
                             </div>
                             <div class="mt-2">
                                 <label class="form-label"  for="content">내용</label>
@@ -57,8 +57,8 @@
                     
                     <div class="card-footer">
                         <div class="d-flex justify-content-center">
-                            <button class="btn btn-outline-danger me-2">삭제</button>
-                            <button class="btn btn-outline-success">업데이트</button>
+                            <button class="btn btn-outline-danger me-2" id="btnDelete">삭제</button>
+                            <button class="btn btn-outline-success" id="btnUpdate">업데이트</button>
                         </div>
                     </div>  
                 </div>

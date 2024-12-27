@@ -30,48 +30,60 @@
 
                     <div class="card-body">
                         <form>
-                            <c:set var="post" value="${post}"></c:set>
+
+
                             <div class="mt-2">
-                                <label class="form-label" for="id">번호</label> <input
+                                <label class="form-label" for="id">번호</label>
+                                <input class="form-control" id="id"
+                                    type="text" value="${post.id
+                                    }" readonly />
+                            </div>
+
+                            <div class="mt-2">
+                                <label class="form-label" for="title">제목</label>
+                                <input class="form-control" id="title"
+                                    type="text" value="${ post.title }"
+                                    readonly />
+                            </div>
+                            <div class="mt-2">
+                                <label class="form-label" for="author">작성자</label>
+                                <input id="author" type="text"
                                     class="form-control"
-                                    id="id" type="text"
-                                    value=${ post.id} readonly />
+                                    value="${ post.author }" readonly />
                             </div>
                             <div class="mt-2">
-                                <label class="form-label"  for="title">제목</label> <input
-                                    id="title" type="text"  class="form-control"
-                                    value=${ post.title} readonly />
+                                <label class="form-label" for="content">내용</label>
+                                <textarea id="content"
+                                    class="form-control" rows="5"
+                                    readonly>${post.content}</textarea>
                             </div>
                             <div class="mt-2">
-                                <label class="form-label"  for="author">작성자</label> <input
-                                    id="author" type="text"  class="form-control"
-                                    value=${post.author } readonly />
+                                <label class="form-label"
+                                    for="createdTime">작성시간</label> <input
+                                    type="text" id="createdTime"
+                                    class="form-control"
+                                    value="${post.createdTime }" readonly />
                             </div>
                             <div class="mt-2">
-                                <label class="form-label"  for="content">내용</label>
-                                <textarea id="content"  class="form-control" rows="5" readonly>${post.content}</textarea>
-                            </div>
-                            <div class="mt-2">
-                                <label class="form-label" for="createdTime">작성시간</label> <input
-                                    type="text" id="createdTime"  class="form-control"
-                                    value=${post.createdTime } readonly />
-                            </div>
-                            <div class="mt-2">
-                                <label class="form-label" for="modifiedTime">최종수정시간</label>
-                                <input id="modifiedTime" type="text"  class="form-control"
-                                    value=${post.modifiedTime } readonly />
+                                <label class="form-label"
+                                    for="modifiedTime">최종수정시간</label> <input
+                                    id="modifiedTime" type="text"
+                                    class="form-control"
+                                    value="${post.modifiedTime }" readonly />
                             </div>
                         </form>
                     </div>
-                    
+
                     <div class="card-footer">
                         <div class="d-flex justify-content-center">
-                            <c:url var="postModifyPage" value="/post/modify">
-                                <c:param name="id" value="${post.id}" />    
+                            <c:url var="postModifyPage"
+                                value="/post/modify">
+                                <c:param name="id" value="${post.id}" />
                             </c:url>
-                            <a class="btn btn-outline-success" href="${postModifyPage}">수정하기</a>
+                            <a class="btn btn-outline-success"
+                                href="${postModifyPage}">수정하기</a>
                         </div>
-                    </div>  
+                    </div>
                 </div>
             </main>
         </div>

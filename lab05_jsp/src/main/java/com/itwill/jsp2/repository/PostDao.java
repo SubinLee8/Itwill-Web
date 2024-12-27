@@ -50,6 +50,9 @@ public enum PostDao {
 		}
 		return posts;
 	}
+	
+	private static final String SQL_SEARCH_BY_TITLE="select * from posts where ";
+	
 
 	private Post toPostFromResultSet(ResultSet rs) throws SQLException {
 		int id = rs.getInt("ID");
@@ -117,5 +120,96 @@ public enum PostDao {
 		}
 		return post;
 				
+	}
+	
+	private final String SQL_DELETE_BY_ID = "delete from posts where id=?";
+	
+	public int delete(int id) {
+		int result=0;
+		Connection conn=null;
+		PreparedStatement stmt=null;
+		try {
+			conn=ds.getConnection();
+			stmt=conn.prepareStatement(SQL_DELETE_BY_ID);
+			stmt.setInt(1, id);
+			stmt.executeUpdate();
+			result=1;
+		} catch (SQLException e) {
+			
+		}
+		finally {
+			close(conn,stmt);
+		}
+		
+		
+		return result;
+	}
+	
+	private final String SQL_UPDATE_BY_ID = "update posts set title=?, content=?, modified_time=systimestamp where id=? ";
+	public int update(Post post) {
+		int result=0;
+		Connection conn=null;
+		PreparedStatement stmt = null;
+		try {
+			conn=ds.getConnection();
+			stmt=conn.prepareStatement(SQL_UPDATE_BY_ID);
+			stmt.setString(1, post.getTitle());
+			stmt.setString(2, post.getContent());
+			stmt.setInt(3, post.getId());
+			stmt.executeUpdate();
+			result=1;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(conn,stmt);
+		}
+		
+		return result;
+	}
+	
+	private final String SQL_SELECT_BY_TITLE="select * from posts where upper(title) like upper('%'||?||'%') order by id desc";
+	private final String SQL_SELECT_BY_CONTENT="select * from posts where upper(content) like upper('%'||?||'%') order by id desc";
+	private final String SQL_SELECT_BY_TITLE_AND_CONTENT="select * from posts where upper(title) like upper('%'||?||'%') "
+			+ "or upper(content) like upper('%'||?||'%') order by id desc";
+	private final String SQL_SELECT_BY_AUTHOR="select * from posts where upper(author) like upper('%'||?||'%') order by id desc";
+	
+	public List<Post> select(String category, String keyword) {
+		log.debug("category={}",category);
+		log.debug("keyword={}",keyword);
+		List<Post> posts = new ArrayList<Post>();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try {
+			conn = ds.getConnection();
+			if(category.equals("t")) {
+				stmt = conn.prepareStatement(SQL_SELECT_BY_TITLE);
+				stmt.setString(1, keyword);
+			}
+			else if(category.equals("tc")) {
+				stmt = conn.prepareStatement(SQL_SELECT_BY_TITLE_AND_CONTENT);
+				stmt.setString(1, keyword);
+				stmt.setString(2, keyword);
+			}
+			else if(category.equals("c")) {
+				stmt = conn.prepareStatement(SQL_SELECT_BY_CONTENT);
+				stmt.setString(1, keyword);
+			}
+			else {
+				stmt = conn.prepareStatement(SQL_SELECT_BY_AUTHOR);
+				stmt.setString(1, keyword);
+			}
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+				Post post = toPostFromResultSet(rs);
+				posts.add(post);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(conn, stmt, rs);
+		}
+		return posts;
 	}
 }
