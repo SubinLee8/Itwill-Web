@@ -1,0 +1,33 @@
+alter session SET "_ORACLE_SCRIPT"=true;
+
+CREATE USER jspstudy identified by jspstudy;
+
+grant dba to jspstudy;
+
+CREATE TABLE posts (
+    id NUMBER(6) GENERATED AS IDENTITY,
+    title VARCHAR2(100 CHAR) NOT NULL,
+    content VARCHAR2(1000 CHAR) NOT NULL,
+    author VARCHAR2(50 CHAR) NOT NULL,
+    created_time TIMESTAMP,
+    modified_time TIMESTAMP,
+    CONSTRAINT pk_posts_id PRIMARY KEY (id)
+);
+
+INSERT INTO POSTS (TITLE, CONTENT, AUTHOR, CREATED_TIME, MODIFIED_TIME) VALUES ('JSP 테스트', 'JSP 공부', 'ADMIN', SYSTIMESTAMP, SYSTIMESTAMP);
+
+create table Members (
+    id number(6) generated as identity, 
+    username varchar2(50 char) not null,
+    password varchar2(50 char) not null,
+    email varchar2(100 char) not null,
+    points number(8) default 0,
+    created_time timestamp,
+    modified_time timestamp,
+    constraint pk_members_id primary key(id),
+    constraint uq_members_username unique (username),
+    constraint uq_members_email unique(email),
+    constraint ck_members_points check(points>=0)
+);
+
+COMMIT;
