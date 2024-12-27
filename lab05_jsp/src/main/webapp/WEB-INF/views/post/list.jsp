@@ -25,7 +25,7 @@
 
     <main>
         <!-- 포스트 목록 테이블 작성 -->
-        
+
         <div class="mt-2 card">
             <div class="card-header">
                 <c:url value="/post/search" var="postSearchPage" />
@@ -38,15 +38,18 @@
                                 <option value="tc">제목+내용</option>
                                 <option value="a">작성자</option>
                             </select>
-                            </div>
-                            
-                            <div class="col-7">
-                                <input class="form-control" type="text" name="keyword" id="keyword" />
-                            </div>
-                            <div class="col-2">
-                                <input class="form-control btn btn-outline-secondary" type="submit" value="검색" />
-                            </div>
-                        
+                        </div>
+
+                        <div class="col-7">
+                            <input class="form-control" type="text"
+                                name="keyword" id="keyword" />
+                        </div>
+                        <div class="col-2">
+                            <input
+                                class="form-control btn btn-outline-secondary"
+                                type="submit" value="검색" />
+                        </div>
+
                     </div>
                 </form>
             </div>

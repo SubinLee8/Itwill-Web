@@ -38,7 +38,6 @@ public class PostSearchController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String category=request.getParameter("category");
 		String keyword=request.getParameter("keyword");
-		log.info(category,keyword);
 		List<Post> posts=postService.search(category,keyword);
 		request.setAttribute("posts", posts);
 		request.getRequestDispatcher("/WEB-INF/views/post/list.jsp").forward(request, response);
