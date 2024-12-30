@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpSession;
 import oracle.net.ns.SessionAtts;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,19 +48,32 @@ public class UserSignInController extends HttpServlet {
 		String username=request.getParameter("username");
 		String password=request.getParameter("password");
 		Member member = memberService.signIn(username, password);
+		String target=request.getParameter("target");
+		log.debug("doPost(username={}, password={}, target={})",username,password,target);
+		
+		
 		if(member!=null) {
 			//username과 password가 일치하는 사용자가 있는 경우 -> 로그인 성공
 			//세션에 로그인 정보 저장.
 			HttpSession session = request.getSession();
 			session.setAttribute("signedInUser", member.getUserName());
 			
-			//목록으로 이동(redirect)
+			
 			log.debug("로그인 성공:redirect to list page");
-			response.sendRedirect(request.getContextPath()+"/post/list");
+			if(target!=null && !target.equals("")) {
+				//target page로 리다이렉트
+				response.sendRedirect(target);
+			}
+			else {
+				//홈페이지로 리다이렉트
+				response.sendRedirect(request.getContextPath()+"/"); 
+			}
+			
 		}else {
 			//로그인 실패 -> 로그인 페이지로 redirect
 			log.debug("로그인 실패:redirect to signin page");
-			response.sendRedirect(request.getContextPath()+"/user/signin");
+			response.sendRedirect(request.getContextPath()+"/user/signin?result=f&target="+
+			URLEncoder.encode(target, "UTF-8"));
 		}
 		
 	}

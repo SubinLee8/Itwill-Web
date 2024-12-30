@@ -56,10 +56,12 @@
                     </div>
                     
                     <div class="card-footer">
+                        <c:if test="post.author eq signedInUser">
                         <div class="d-flex justify-content-center">
                             <button class="btn btn-outline-danger me-2" id="btnDelete">삭제</button>
                             <button class="btn btn-outline-success" id="btnUpdate">업데이트</button>
                         </div>
+                        </c:if>
                     </div>  
                 </div>
             </main>

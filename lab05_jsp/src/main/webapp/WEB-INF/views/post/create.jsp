@@ -38,7 +38,7 @@
                         </div>
                         <div class="mt-2">
                             <input class="form-control" type="text"
-                                placeholder="작성자" name="author" required  />
+                                placeholder="작성자" name="author" value="${signedInUser}" readonly  />
                         </div>
                         <div class="mt-2">
                             <textarea class="form-control"

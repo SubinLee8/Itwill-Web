@@ -20,6 +20,33 @@ public enum MemberDao {
 	private static final Logger log = LoggerFactory.getLogger(MemberDao.class);
 	private HikariDataSource ds=DataSourceUtil.INSTANCE.getDataSource();
 	
+	
+	private final String SQL_UPDATE_POINTS = "update members set points=points+ ?, modified_time=systimestamp where username=?";
+
+	public int updatePoints(int points, String username) {
+		int result=0;
+		Connection conn=null;
+		PreparedStatement stmt=null;
+		try {
+			conn=ds.getConnection();
+			stmt=conn.prepareStatement(SQL_UPDATE_POINTS);
+			stmt.setInt(1, points);
+			stmt.setString(2, username);
+			stmt.executeUpdate();
+			result=1;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			close(conn,stmt);
+		}
+		return result;
+		
+	}
+	
+	
+	
 	//회원가입에 필요한 SQL, 메서드
 	private final String SQL_INSERT_INTO_MEMBERS = "insert into members (username, password, email, created_time, modified_time) values(?, ?, ?, systimestamp, systimestamp)";
 	public int insert(Member member) {

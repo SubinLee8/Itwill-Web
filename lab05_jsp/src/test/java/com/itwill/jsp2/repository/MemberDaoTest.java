@@ -22,6 +22,6 @@ public class MemberDaoTest {
 		
 		//username과 password가 일치하는 사용자가 없는 경우
 		Member m2=memberDao.select("max", "m123");
-		Assertions.assertNotNull(m2);
+		Assertions.assertNull(m2);
 	}
 }

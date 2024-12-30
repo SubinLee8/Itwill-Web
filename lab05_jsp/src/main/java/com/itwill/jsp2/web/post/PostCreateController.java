@@ -5,6 +5,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 
 import org.slf4j.Logger;
@@ -44,7 +46,7 @@ public class PostCreateController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	log.debug("doPost()");
     	
-    	//양식 데이터에 포함된 요청 파라미터 값들(title, content, author)을 읽음.
+    	//양식 데이터에 포함된 요청 파라미터 값들(title, content, author)을  .
     	String title=request.getParameter("title");
     	String author=request.getParameter("author");
     	String content=request.getParameter("content");

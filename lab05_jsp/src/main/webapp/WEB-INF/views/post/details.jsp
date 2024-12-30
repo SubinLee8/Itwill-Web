@@ -73,15 +73,18 @@
                             </div>
                         </form>
                     </div>
-
+                    
+                    <!-- 포스트 작성자 아이디와 로그인 사용자 아이디가 같은 경우에만 수정하기 버튼을 보여줌 -->
                     <div class="card-footer">
                         <div class="d-flex justify-content-center">
                             <c:url var="postModifyPage"
                                 value="/post/modify">
                                 <c:param name="id" value="${post.id}" />
                             </c:url>
+                            <c:if test="${signedInUser eq post.author }">
                             <a class="btn btn-outline-success"
                                 href="${postModifyPage}">수정하기</a>
+                                </c:if>
                         </div>
                     </div>
                 </div>

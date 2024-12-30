@@ -5,6 +5,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 
 import org.slf4j.Logger;
@@ -45,6 +47,7 @@ public class PostDetailController extends HttpServlet {
     	Post post=postService.read(id);
     	request.setAttribute("post", post);
     	log.debug(post.toString());
+    	
     	
     	//포워드
     	request.getRequestDispatcher("/WEB-INF/views/post/details.jsp").forward(request, response);

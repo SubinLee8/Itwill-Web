@@ -35,6 +35,13 @@
                 <label for="password">비밀번호</label>
                 <input class="form-control" type="text" name="password" id="password" required>
                </div>
+               <div class="d-none">
+                <input name="target" value=" ${param.target}" readonly/>
+               </div>
+               <c:if test="${not empty param.result && param.result eq 'f'}" >
+               <div class="text-danger mt-2">아이디와 패스워드를 확인하세요.</div></c:if>
+               
+               
                <div class="mt-2">
                 <input class="form-control  btn btn-outline-primary" type="submit" value="로그인">
                </div>
