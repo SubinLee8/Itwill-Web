@@ -33,7 +33,18 @@
                     <input type="text" name="username"
                         placeholder="이름입력"> <input type="number"
                         name="age" placeholder="나이입력"> <input
-                        type="submit" value="제출">
+                        type="submit" value="GET 제출">
+                </form>
+            </section>
+            
+            <section>
+                <h2>POST 방식 요청</h2>
+                <c:url value="/ex2" var="ex2Page" />
+                <form method="post" action="${ex2Page }">
+                    <input type="text" name="username"
+                        placeholder="이름입력"> <input type="number"
+                        name="age" placeholder="나이입력"> <input
+                        type="submit" value="POST 제출">
                 </form>
             </section>
         </main>

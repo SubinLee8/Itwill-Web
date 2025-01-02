@@ -33,6 +33,34 @@
                 <c:url value="/example" var="examplePage"/>
                 <a href="${examplePage}">컨트롤러 예제</a>
             </li>
+            <li>
+                <c:url value="/test" var="testPage"/>
+                <a href="${testPage}">테스트페이지</a>
+            </li>
+            <li>
+                <c:url value="/test2" var="forwardPage"/>
+                <a href="${forwardPage}">포워드페이지</a>
+            </li>
+            <li>
+                <c:url value="/test3" var="RedirectPage"/>
+                <a href="${RedirectPage}">리다이렉트</a>
+            </li>
+            <li>
+                <c:url value="/rest1" var="rest1Page"/>
+                <a href="${rest1Page}">REST 1</a>
+            </li>
+            <li>
+                <c:url value="/rest2" var="rest2Page"/>
+                <a href="${rest2Page}">REST 2</a>
+            </li>
+            <li>
+                <c:url value="/rest3" var="rest3Page"/>
+                <a href="${rest3Page}">REST Controller 3</a>
+            </li>
+             <li>
+                <c:url value="/rest4" var="rest4Page"/>
+                <a href="${rest4Page}">REST Controller 4</a>
+            </li>
         </ul>
     </main>
     
