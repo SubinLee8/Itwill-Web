@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.itwill.spring2.repository.PostDao">
+        <!-- 영속성 프레임워크 MyBatis에서 실행할 SQL 문장들을 선언하는 파일 -->
+  
+    <!-- 포스트 목록 보기에서 사용할 메서드  이름과 SQL 문장 -->
+  <select id="selectOrderByIdDesc" resultType="Post">
+    select  * from posts order by id desc
+  </select>
+  
+  
+  <!-- 포스트 상세보기에서 사용할 메서드  이름과 SQL 문장 -->
+  <select id="selectById" resultType="Post">
+    select * from posts where id = #{id}
+  </select>
+  
+  </mapper>
