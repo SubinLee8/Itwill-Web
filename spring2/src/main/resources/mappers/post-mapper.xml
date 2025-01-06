@@ -16,4 +16,17 @@
     select * from posts where id = #{id}
   </select>
   
+  <!-- 포스트 새글 작성에서 사용할 메서드 이름과 SQL 문장 -->
+  <insert id="insertPost">
+    insert into posts (title, content, author, created_time, modified_time) values(#{title},#{content},#{author},systimestamp, systimestamp)
+  </insert>
+  
+  <update id="updatePost">
+    update posts set title=#{title}, content=#{content}, modified_time=systimestamp where id=#{id}
+  </update>
+  
+  <delete id="deletePost">
+    delete from posts where id=#{id}
+  </delete>
+  
   </mapper>

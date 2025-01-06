@@ -8,6 +8,12 @@ public interface PostDao {
 	List<Post> selectOrderByIdDesc();
 	
 	Post selectById(Integer id);
+	
+	int insertPost(Post post);
+	
+	int updatePost(Post post);
+	
+	int deletePost(Integer id);
 }
 
 
