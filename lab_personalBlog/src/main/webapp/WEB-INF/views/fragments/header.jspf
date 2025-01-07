@@ -1,0 +1,63 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core"%>
+<header class="mt-2 p-4 text-blue text-center">
+    <h1>MY BLOG </h1>
+</header>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <c:url value="/" var="homePage"></c:url>
+        <a class="navbar-brand" href="${homePage }">Home</a>
+        <button class="navbar-toggler" type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse"
+            id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <c:url value="/post/list" var="postListPage" />
+                <li class="nav-item"><a class="nav-link active"
+                    aria-current="page" href="${postListPage }">전체보기</a></li>
+                <c:url value="/post/create" var="postCreatePage" />
+                <li class="nav-item"><a class="nav-link"
+                    href="${postCreatePage }">새 포스트</a></li>
+                <li class="nav-item dropdown"><a
+                    class="nav-link dropdown-toggle" href="#"
+                    id="navbarDropdown" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                        Sign In/Out </a>
+                    <ul class="dropdown-menu"
+                        aria-labelledby="navbarDropdown">
+                        <c:if test="${empty signedInUser}">
+                            <c:url value="/user/signin"
+                                var="userSignInPage" />
+                            <li><a class="dropdown-item"
+                                href="${userSignInPage }">로그인</a></li>
+                            <c:url value="/user/signup"
+                                var="userSignUpPage" />
+                            <li><a class="dropdown-item"
+                                href="${userSignUpPage }">회원가입</a></li>
+                        </c:if>
+
+                        <c:if test="${not empty signedInUser}">
+                            <c:url value="/user/signout"
+                                var="userSignOutPage" />
+                            <li><a class="dropdown-item" href="${userSignOutPage }">로그아웃</a></li>
+                        </c:if>
+
+                    </ul></li>
+
+            </ul>
+            <form class="d-flex">
+                <input class="form-control me-2" type="search"
+                    placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success container-fluid"
+                    type="submit">검색</button>
+            </form>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="https://jakarta.ee/xml/ns/jakartaee" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd" id="WebApp_ID" version="6.0">
+  <display-name>lab_personalBlog</display-name>
+  <welcome-file-list>
+    <welcome-file>home.jsp</welcome-file>
+  </welcome-file-list>
+  <filter>
+    <filter-name>authentificationFilter</filter-name>
+    <filter-class>com.subin.myblog.filter.AuthentificationFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>authentificationFilter</filter-name>
+    <url-pattern>/post/create</url-pattern>
+    <url-pattern>/post/details</url-pattern>
+    <url-pattern>/post/modify</url-pattern>
+  </filter-mapping>
+</web-app>
