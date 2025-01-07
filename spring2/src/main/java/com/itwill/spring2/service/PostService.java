@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.itwill.spring2.domain.Post;
 import com.itwill.spring2.dto.PostCreateDto;
+import com.itwill.spring2.dto.PostSearchDto;
+import com.itwill.spring2.dto.PostUpdateDto;
 import com.itwill.spring2.repository.PostDao;
 
 import lombok.RequiredArgsConstructor;
@@ -29,7 +31,9 @@ public class PostService {
 //	public PostService(PostDao postDao) {
 //		this.postDao=postDao;
 //	}
+	
 //	
+	
 	
 	public List<Post> read() {
 		log.debug("read()");
@@ -43,9 +47,9 @@ public class PostService {
 		return post;
 	}
 	
-	public int update(Post post) {
+	public int update(PostUpdateDto dto) {
 		log.debug("update()");
-		int result=postDao.updatePost(post);
+		int result=postDao.updatePost(dto);
 		return result;
 	}
 	
@@ -61,6 +65,15 @@ public class PostService {
 		//PostService ==> PostDao 계층의 메서드 호출 & Entity를 아규먼트로 전달.
 		int result=postDao.insertPost(dto.toEntity());
 		return result;
+	}
+	
+	public List<Post> read(PostSearchDto dto){
+		log.debug("read(dto={})",dto);
+		
+		//영속성 계층의 메소드를 호출해서 DB에서 SELECT 수행.
+		List<Post> list=postDao.search(dto);
+		log.debug("# of search results={}",list.size());
+		return list;
 	}
 	
 	

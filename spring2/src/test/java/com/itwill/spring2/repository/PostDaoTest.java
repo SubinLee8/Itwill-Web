@@ -54,13 +54,13 @@ public class PostDaoTest {
 	}
 	
 	//@Test
-	public void testUpdatePost() {
-		Post post=postDao.selectById(101);
-		post.setContent("수정 후");
-		post.setTitle("수정 안녕하세요");
-		int result=postDao.updatePost(post);
-		Assertions.assertEquals(1, result);
-	}
+	//public void testUpdatePost() {
+		//Post post=postDao.selectById(101);
+		//post.setContent("수정 후");
+		//post.setTitle("수정 안녕하세요");
+		//int result=postDao.updatePost(post);
+		//Assertions.assertEquals(1, result);
+	//}
 	
 	@Test
 	public void testDeletePost() {

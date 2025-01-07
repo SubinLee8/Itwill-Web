@@ -29,4 +29,27 @@
     delete from posts where id=#{id}
   </delete>
   
+  <!-- 포스트 검색(카테고리, 키워드)에서 사용할 메서드 이름과 SQL 문장 -->
+  <select id="search" resultType="Post">
+    <bind name="searchKeyword" value="'%'+keyword+'%'" />
+    select * from posts  
+    <where>  
+        <choose>
+            <when test='category.equals("t")'>
+                upper(title) like upper(#{searchKeyword})
+            </when>
+            <when test='category.equals("c")'>
+                upper(content) like upper(#{searchKeyword})
+            </when>
+            <when test='category.equals("tc")'>
+                upper(title) like upper(#{searchKeyword}) or
+                upper(content) like upper(#{searchKeyword})
+            </when>
+            <when test='category.equals("a")'>
+                upper(author) like upper(#{searchKeyword})
+            </when>
+        </choose>
+    </where>
+    order by id desc
+  </select>
   </mapper>

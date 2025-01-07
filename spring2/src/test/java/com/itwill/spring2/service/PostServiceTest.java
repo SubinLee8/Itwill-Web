@@ -47,9 +47,9 @@ public class PostServiceTest {
 //	}
 	
 	//수정하기 서비스
-	@Test int update(Post post) {
-		return postService.update(post);
-	}
+	//@Test int update(Post post) {
+		//return postService.update(post);
+	//}
 	
 	//삭제하기 서비스
 	@Test int delete(Integer Id) {
