@@ -105,8 +105,9 @@
                             var="postDetailsPage">
                             <c:param name="id" value="${post.id}" />
                         </c:url>
-                        <td>${post.id}</a></td>
-                        <td><a href="${postDetailsPage}">${post.title}</td>
+                        <td>${post.id}</td>
+                        <td><a href="${postDetailsPage}"
+                            style="color: DarkOliveGreen;">${post.title}</a></td>
                         <td>${post.author}</td>
                         <td>${post.createdTime}</td>
                         <td>${post.modifiedTime}</td>
@@ -115,26 +116,66 @@
             </tbody>
         </table>
     </div>
-    <div class="row mt-6 wow fadeInUp" data-wow-delay=".6s"
+    <div class="row mt-6 wow fadeInUp m-10" data-wow-delay=".6s"
         style="visibility: visible; animation-delay: 0.6s; animation-name: fadeInUp;">
-        <div class="col-12">
+        <div class="col-12 ">
             <div
                 class="pagination text-small text-uppercase text-extra-dark-gray">
                 <ul>
-                    <li><a href="#!"><i
+                    <c:url value="/post/list" var="postListPage">
+                        <c:param name="page" value="${currentPage}" />
+                    </c:url>
+                    <li><a href="#!" style="color: DarkOliveGreen;"><i
                             class="fas fa-long-arrow-alt-left me-1 d-none d-sm-inline-block"></i>
-                            Prev</a></li>
-                    <li class="active"><a href="#!">1</a></li>
-                    <li><a href="#!">2</a></li>
-                    <li><a href="#!">3</a></li>
-                    <li><a href="#!">Next <i
-                            class="fas fa-long-arrow-alt-right ms-1 d-none d-sm-inline-block"></i></a></li>
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                width="16" height="16"
+                                fill="currentColor"
+                                class="bi bi-chevron-double-left"
+                                viewBox="0 0 16 16">
+  <path fill-rule="evenodd"
+                                    d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0" />
+  <path fill-rule="evenodd"
+                                    d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0" />
+</svg></a></li>
+
+
+                    <c:forEach begin="1" end="${pageNum}" var="i"
+                        step="1">
+                        <c:url value="/post/list" var="postListPage">
+                            <c:param name="page" value="${i}" />
+                        </c:url>
+                        <c:choose>
+                            <c:when test="${currentPage eq i }">
+                                <li class="active"><a
+                                    href="${postListPage}"
+                                    style="color: DarkOliveGreen;">${i}</a></li>
+                            </c:when>
+                            <c:otherwise>
+                                <li><a href="${postListPage}"
+                                    style="color: DarkOliveGreen;">${i}</a></li>
+                            </c:otherwise>
+                        </c:choose>
+
+
+                    </c:forEach>
+                    <li><a href="#!" style="color: DarkOliveGreen;"><svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="16" height="16"
+                                fill="currentColor"
+                                class="bi bi-chevron-double-right"
+                                viewBox="0 0 16 16">
+  <path fill-rule="evenodd"
+                                    d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708" />
+  <path fill-rule="evenodd"
+                                    d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708" />
+</svg> <i class="fas fa-long-arrow-alt-right ms-1 d-none d-sm-inline-block"></i>
+                    </a></li>
                 </ul>
             </div>
         </div>
     </div>
 
-
+    <%@ include file="../fragments/footer.jspf"%>
     <!-- Bootstrap Javascript  -->
     <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
