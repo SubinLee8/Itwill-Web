@@ -68,7 +68,7 @@
 
         </main>
     </div>
-
+    <%@ include file="../fragments/footer.jspf"%>
 
     <!-- Bootstrap Javascript  -->
     <script

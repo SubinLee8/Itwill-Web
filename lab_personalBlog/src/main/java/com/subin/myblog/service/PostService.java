@@ -21,6 +21,18 @@ public enum PostService {
 		
 	}
 	
+	public Integer postCount() {
+		log.debug("readCount()");
+		return postDao.selectCount();
+	}
+	
+	public List<Post> readPage(Integer page) {
+		log.debug("readPage()");
+		
+		return postDao.selelctPage(page);
+		
+	}
+	
 	public int create(Post post) {
 		log.info("create()(Post={})",post);
 		int result=postDao.insert(post);

@@ -78,7 +78,7 @@
         </div>
 
     </div>
-
+    <%@ include file="../fragments/footer.jspf"%>
     <!-- Bootstrap Javascript  -->
     <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -122,54 +124,135 @@
             <div
                 class="pagination text-small text-uppercase text-extra-dark-gray">
                 <ul>
+                    <c:set var="pg" value="${pageGroup}" />
+                    
                     <c:url value="/post/list" var="postListPage">
-                        <c:param name="page" value="${currentPage}" />
+                        <c:param name="page" value="${currentPage-5}" />
+                        <c:param name="pg" value="${pg-1}" />
                     </c:url>
-                    <li><a href="#!" style="color: DarkOliveGreen;"><i
-                            class="fas fa-long-arrow-alt-left me-1 d-none d-sm-inline-block"></i>
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                width="16" height="16"
-                                fill="currentColor"
-                                class="bi bi-chevron-double-left"
-                                viewBox="0 0 16 16">
+                    <c:choose>
+                        <c:when test="${pg > 1}">
+                            <!-- 돌아가는 것이 가능할 때 -->
+                            <li><a href="${postListPage }"
+                                style="color: DarkOliveGreen;"><i
+                                    class="fas fa-long-arrow-alt-left me-1 d-none d-sm-inline-block"></i>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="16" height="16"
+                                        fill="currentColor"
+                                        class="bi bi-chevron-double-left"
+                                        viewBox="0 0 16 16">
   <path fill-rule="evenodd"
-                                    d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0" />
+                                            d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0" />
   <path fill-rule="evenodd"
-                                    d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0" />
+                                            d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0" />
 </svg></a></li>
+                        </c:when>
+
+                    
+                        <c:otherwise>
+                            <li class="active"><a href=""
+                                style="color: DarkOliveGreen;"><i
+                                    class="fas fa-long-arrow-alt-left me-1 d-none d-sm-inline-block"></i>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="16" height="16"
+                                        fill="currentColor"
+                                        class="bi bi-chevron-double-left"
+                                        viewBox="0 0 16 16">
+  <path fill-rule="evenodd"
+                                            d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0" />
+  <path fill-rule="evenodd"
+                                            d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0" />
+</svg></a></li>
+                        </c:otherwise>
+                    </c:choose>
 
 
-                    <c:forEach begin="1" end="${pageNum}" var="i"
-                        step="1">
+
+
+
+                    <c:set var="loop_flag" value="false" />
+
+
+                    <c:forEach begin="${(pg-1)*5+1}" end="${pageNum}"
+                        var="i" step="1">
                         <c:url value="/post/list" var="postListPage">
                             <c:param name="page" value="${i}" />
+                            <c:param name="pg" value="${pg}" />
                         </c:url>
-                        <c:choose>
-                            <c:when test="${currentPage eq i }">
-                                <li class="active"><a
-                                    href="${postListPage}"
-                                    style="color: DarkOliveGreen;">${i}</a></li>
-                            </c:when>
-                            <c:otherwise>
-                                <li><a href="${postListPage}"
-                                    style="color: DarkOliveGreen;">${i}</a></li>
-                            </c:otherwise>
-                        </c:choose>
 
+
+
+                        <c:if test="${not loop_flag }">
+                            <c:if test="${(i mod 5) eq 0}">
+                                <c:set var="loop_flag" value="true" />
+                            </c:if>
+
+
+                            <c:choose>
+                                <c:when test="${currentPage eq i }">
+                                    <li class="active"><a
+                                        href="${postListPage}"
+                                        style="color: DarkOliveGreen;">${i}</a></li>
+                                </c:when>
+                                <c:otherwise>
+                                    <li><a href="${postListPage}"
+                                        style="color: DarkOliveGreen;">${i}</a></li>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:if>
 
                     </c:forEach>
-                    <li><a href="#!" style="color: DarkOliveGreen;"><svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="16" height="16"
-                                fill="currentColor"
-                                class="bi bi-chevron-double-right"
-                                viewBox="0 0 16 16">
+
+
+                  
+                    <fmt:parseNumber var="quotient" type="number" integerOnly="true" value="${currentPage/5}" />
+                    <fmt:formatNumber var="Nextpage" type="number" value="${(quotient+1)*5+1}"/>
+                    <c:url value="/post/list" var="postListPage">
+                        <c:param name="page"
+                            value="${Nextpage}" />
+                        <c:param name="pg" value="${pg+1}" />
+                    </c:url>
+                    <c:set value="${finalPg }" var="finalPg" />
+                    <c:choose>
+                        <c:when test="${pg < finalPg}" >
+                            <!-- 건너 뛰는 것이 가능할 때 -->
+                            <li><a href="${postListPage}"
+                                style="color: DarkOliveGreen;"><svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="16" height="16"
+                                        fill="currentColor"
+                                        class="bi bi-chevron-double-right"
+                                        viewBox="0 0 16 16">
   <path fill-rule="evenodd"
-                                    d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708" />
+                                            d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708" />
   <path fill-rule="evenodd"
-                                    d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708" />
+                                            d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708" />
 </svg> <i class="fas fa-long-arrow-alt-right ms-1 d-none d-sm-inline-block"></i>
-                    </a></li>
+                            </a></li>
+                        </c:when>
+
+
+                        <c:otherwise>
+                            <li class="active"><a href=""
+                                style="color: DarkOliveGreen;"><svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="16" height="16"
+                                        fill="currentColor"
+                                        class="bi bi-chevron-double-right"
+                                        viewBox="0 0 16 16">
+  <path fill-rule="evenodd"
+                                            d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708" />
+  <path fill-rule="evenodd"
+                                            d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708" />
+</svg> <i class="fas fa-long-arrow-alt-right ms-1 d-none d-sm-inline-block"></i>
+                            </a></li>
+                        </c:otherwise>
+                    </c:choose>
+
+
+
                 </ul>
             </div>
         </div>

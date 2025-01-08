@@ -45,8 +45,10 @@ div {
             <div class="container mt-2">
                 <h2 class="display-3">Hello, world!</h2>
                 <p>생각하는 것을 적고, 다른 사람들의 의견을 감상하세요. 개인정보를 공개하지않아도 됩니다.</p>
-                <p><c:url value="/post/create" var="postCreatePage"></c:url>
-                    <a class="btn btn-primary" href="${postCreatePage }" role="button">새 글 적기 »</a>
+                <p>
+                    <c:url value="/post/create" var="postCreatePage"></c:url>
+                    <a class="btn btn-primary" href="${postCreatePage }"
+                        role="button">새 글 적기 »</a>
                 </p>
             </div>
         </div>
@@ -61,11 +63,14 @@ div {
                 <div class="col-md-4">
                     <h2>${post.title }</h2>
                     <p>${post.content}</p>
-                    <p><c:url value="/post/details" var="postDetailPage" >
-                        <c:param name="id" value="${post.id }"/>
-                    </c:url>
-                        <a class="btn btn-secondary" href="${postDetailPage }"
-                            role="button">View details »</a>
+                    <p>
+                        <c:url value="/post/details"
+                            var="postDetailPage">
+                            <c:param name="id" value="${post.id }" />
+                        </c:url>
+                        <a class="btn btn-secondary"
+                            href="${postDetailPage }" role="button">View
+                            details »</a>
                     </p>
                 </div>
             </c:forEach>
@@ -76,7 +81,7 @@ div {
         <hr>
 
     </div>
-
+    <%@include file="./fragments/footer.jspf"%>
 
     <!-- Bootstrap Javascript  -->
     <script

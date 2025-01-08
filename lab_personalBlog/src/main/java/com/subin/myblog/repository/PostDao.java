@@ -49,6 +49,32 @@ public enum PostDao {
 			return posts;
 		}
 		
+		//포스트 목록 페이징 처리에 사용할 SQL
+		private static final String SQL_SELECT_PAGING = "select * from posts order by id desc OFFSET ? ROWS FETCH NEXT 10 ROWS ONLY";
+		public List<Post> selelctPage(Integer page) {
+			log.debug(SQL_SELECT_PAGING);
+			int offset=(page-1)*10;
+			List<Post> posts = new ArrayList<Post>();
+			Connection conn = null;
+			PreparedStatement stmt = null;
+			ResultSet rs = null;
+			try {
+				conn = ds.getConnection();
+				stmt = conn.prepareStatement(SQL_SELECT_PAGING);
+				stmt.setInt(1, offset);
+				rs = stmt.executeQuery();
+				while (rs.next()) {
+					Post post = toPostFromResultSet(rs);
+					posts.add(post);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(conn, stmt, rs);
+			}
+			return posts;
+		}
+		
 		private static final String SQL_SEARCH_BY_TITLE="select * from posts where ";
 		
 
@@ -213,4 +239,34 @@ public enum PostDao {
 			}
 			return posts;
 		}
+		
+		
+		
+		private final String SQL_POSTS_COUNT= "select count(*) from posts";
+		
+		public Integer selectCount() {
+			int count=0;
+			Connection conn = null;
+			PreparedStatement stmt = null;
+			ResultSet rs = null;
+			try {
+				conn = ds.getConnection();
+				stmt = conn.prepareStatement(SQL_POSTS_COUNT);
+				rs = stmt.executeQuery();
+				if (rs.next()) {
+					count=rs.getInt("count(*)");
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(conn, stmt, rs);
+			}
+			return count;
+		}
 	}
+
+
+
+
+
+
