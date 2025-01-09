@@ -54,6 +54,11 @@
             <input id="modifiedTime" type="text" class="form-control"
                 value="${post.modifiedTime }" readonly />
         </div>
+        <!--<div class="mt-2">
+            <label class="form-label" for="modifiedTime">첨부 파일</label>
+            <input id="modifiedTime" type="text" class="form-control"
+                value="${post.modifiedTime }" readonly />
+        </div> -->
         <div class="card-footer">
             <div class="d-flex justify-content-center">
 

@@ -61,6 +61,7 @@ public class UserSignInController extends HttpServlet {
 			
 			log.debug("로그인 성공:redirect to list page");
 			if(target!=null && !target.equals("")) {
+				
 				//target page로 리다이렉트
 				response.sendRedirect(target);
 			}

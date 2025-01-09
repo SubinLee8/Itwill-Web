@@ -17,11 +17,11 @@
     crossorigin="anonymous">
 </head>
 <body>
-    <c:url value="로그인" var="pageTitle" />
+    
     <%@include file="../fragments/header.jspf"%>
 
     <div class="card">
-        <div class="card-head"></div>
+        <div class="card-header mt-2"><h1>로그인</h1></div>
         <div class="card-body">
             <c:url value="/user/signin" var="signInPage" />
             <form action="${signInPage }" method="post">
@@ -49,6 +49,10 @@
                     <input class="form-control  btn btn-outline-primary"
                         type="submit" value="로그인">
                 </div>
+                <div class="mt-2">
+                <c:url value="/user/signup" var="signUpPage">
+                    </c:url>
+                <a href="${signUpPage }">회원가입</a></div>
             </form>
 
         </div>

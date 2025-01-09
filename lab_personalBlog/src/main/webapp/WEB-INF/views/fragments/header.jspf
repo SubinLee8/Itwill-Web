@@ -19,7 +19,7 @@
         <div class="collapse navbar-collapse"
             id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <c:url value="/post/list" var="postListPage" >
+                <c:url value="/post/list" var="postListPage">
                     <c:param name="page" value="1" />
                     <c:param name="pg" value="1" />
                 </c:url>
@@ -58,8 +58,14 @@
             </ul>
             <c:url value="/post/search" var="postSearchPage" />
             <form class="d-flex" action="${postSearchPage}" method="get">
+                <div class="d-none">
+                    <input name="page" value="1" /> 
+                    <input name="pg" value="1" />
+                </div>
+
                 <input class="form-control me-2" size="60" type="search"
-                    placeholder="Search" name="keyword" aria-label="Search">
+                    placeholder="Search" name="keyword"
+                    aria-label="Search">
                 <button class="btn btn-outline-success btn-sm"
                     type="submit">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16"
@@ -68,7 +74,7 @@
   <path
                             d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
 </svg>
-                    
+
                 </button>
             </form>
         </div>

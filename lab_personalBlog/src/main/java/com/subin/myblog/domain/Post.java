@@ -17,6 +17,7 @@ public class Post {
 	private String author;
 	private LocalDateTime createdTime;
 	private LocalDateTime modifiedTime;
+	private String fileName;
 	
 	
 	

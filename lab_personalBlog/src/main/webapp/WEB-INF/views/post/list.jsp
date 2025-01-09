@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!DOCTYPE html>
 <html>
@@ -125,7 +125,7 @@
                 class="pagination text-small text-uppercase text-extra-dark-gray">
                 <ul>
                     <c:set var="pg" value="${pageGroup}" />
-                    
+
                     <c:url value="/post/list" var="postListPage">
                         <c:param name="page" value="${currentPage-5}" />
                         <c:param name="pg" value="${pg-1}" />
@@ -149,7 +149,7 @@
 </svg></a></li>
                         </c:when>
 
-                    
+
                         <c:otherwise>
                             <li class="active"><a href=""
                                 style="color: DarkOliveGreen;"><i
@@ -206,17 +206,29 @@
                     </c:forEach>
 
 
-                  
-                    <fmt:parseNumber var="quotient" type="number" integerOnly="true" value="${currentPage/5}" />
-                    <fmt:formatNumber var="Nextpage" type="number" value="${(quotient+1)*5+1}"/>
+                    <c:choose>
+                        <c:when test="${currentPage%5==0}">
+                            <fmt:formatNumber var="Nextpage"
+                                type="number" value="${currentPage+1}" />
+                        </c:when>
+                        <c:otherwise>
+                            <fmt:parseNumber var="quotient"
+                                type="number" integerOnly="true"
+                                value="${currentPage/5}" />
+                            <fmt:formatNumber var="Nextpage"
+                                type="number"
+                                value="${(quotient+1)*5+1}" />
+                        </c:otherwise>
+                    </c:choose>
+                    
+
                     <c:url value="/post/list" var="postListPage">
-                        <c:param name="page"
-                            value="${Nextpage}" />
+                        <c:param name="page" value="${Nextpage}" />
                         <c:param name="pg" value="${pg+1}" />
                     </c:url>
                     <c:set value="${finalPg }" var="finalPg" />
                     <c:choose>
-                        <c:when test="${pg < finalPg}" >
+                        <c:when test="${pg < finalPg}">
                             <!-- 건너 뛰는 것이 가능할 때 -->
                             <li><a href="${postListPage}"
                                 style="color: DarkOliveGreen;"><svg

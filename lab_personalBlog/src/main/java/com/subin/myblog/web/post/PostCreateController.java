@@ -49,13 +49,13 @@ public class PostCreateController extends HttpServlet {
 		String title = request.getParameter("title");
 		String author = request.getParameter("author");
 		String content = request.getParameter("content");
-		Post post = Post.builder().title(title).author(author).content(content).build();
 
 		Part part = request.getPart("fileName");
 		String fileName = getFilename(part);
 		if (!fileName.isEmpty()) {
 			part.write("C:\\uploadTest\\" + fileName);
 		}
+		Post post = Post.builder().title(title).author(author).content(content).fileName(fileName).build();
 
 		log.debug("doPost(Post={})", post);
 		int result = postService.create(post);

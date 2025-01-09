@@ -48,23 +48,16 @@ public class UserSignUpController extends HttpServlet {
 		String password=request.getParameter("password");
 		String email=request.getParameter("email");
 		Member member=Member.builder().userName(username).passWord(password).email(email).build();
-		String target=request.getParameter("target");
 		
 		int result=memberService.signUp(member);
 		log.debug("signUp {} result={}",member,result);
 		if(result==0) { //회원가입 실패
-			response.sendRedirect(request.getContextPath()+"/user/signup?result=f&target=");
-			log.debug("회원가입 실패:redirect to signin page");
-			URLEncoder.encode(target, "UTF-8");
+			response.sendRedirect(request.getContextPath()+"/user/signup");
+			log.debug("회원가입 실패:redirect to signUp page");
+			
 		}
 		else { //회원가입 성공
-			if(target.equals("")||target==null)
-			{
-				response.sendRedirect(request.getContextPath()+"/");
-			}
-			else {
-				response.sendRedirect(target);
-			}
+			response.sendRedirect(request.getContextPath()+"/");
 		}
 	}
 
