@@ -20,8 +20,7 @@
             id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <c:url value="/post/list" var="postListPage">
-                    <c:param name="page" value="1" />
-                    <c:param name="pg" value="1" />
+                    
                 </c:url>
                 <li class="nav-item"><a class="nav-link active"
                     aria-current="page" href="${postListPage }">전체보기</a></li>

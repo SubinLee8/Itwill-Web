@@ -35,9 +35,15 @@ public class PostListController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int page=Integer.parseInt(request.getParameter("page")); //포스트 10개가 보여지는 페이지
+		int page=1; //포스트 10개가 보여지는 페이지
+		if(request.getParameter("page")!=null) {
+			page=Integer.parseInt(request.getParameter("page")); 
+		}
 		request.setAttribute("currentPage", page); 
-		int pg=Integer.parseInt(request.getParameter("pg")); //5개의 페이지를 가진 그룹
+		int pg=1; //5개의 페이지를 가진 그룹
+		if(request.getParameter("pg")!=null) {
+			pg=Integer.parseInt(request.getParameter("pg")); 
+		}
 		request.setAttribute("pageGroup", pg);
 		//총 글 개수
 		int postNum=postService.postCount();

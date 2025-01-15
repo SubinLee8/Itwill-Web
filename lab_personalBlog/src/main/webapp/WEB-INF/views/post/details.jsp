@@ -54,11 +54,16 @@
             <input id="modifiedTime" type="text" class="form-control"
                 value="${post.modifiedTime }" readonly />
         </div>
-        <!--<div class="mt-2">
-            <label class="form-label" for="modifiedTime">첨부 파일</label>
-            <input id="modifiedTime" type="text" class="form-control"
-                value="${post.modifiedTime }" readonly />
-        </div> -->
+        <div class="mt-2">
+            <label class="form-label" for="img">첨부 파일</label>
+        
+            <!-- 
+            <c:set attribute value="/myblog/static/img/" var="dir" />
+            <c:set attribute value="${post.fileName}" var="file" />
+            <img id="img" src="${dir)${file}" /> 
+            -->
+            
+        </div> 
         <div class="card-footer">
             <div class="d-flex justify-content-center">
 

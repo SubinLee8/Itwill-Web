@@ -9,7 +9,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.Date;
+import java.util.Locale;
 
 import com.subin.myblog.domain.Post;
 import com.subin.myblog.service.PostService;
@@ -49,30 +52,43 @@ public class PostCreateController extends HttpServlet {
 		String title = request.getParameter("title");
 		String author = request.getParameter("author");
 		String content = request.getParameter("content");
-
+		
+		//업로드된 파일의 part 가져오기
 		Part part = request.getPart("fileName");
-		String fileName = getFilename(part);
-		if (!fileName.isEmpty()) {
-			part.write("C:\\uploadTest\\" + fileName);
-		}
-		Post post = Post.builder().title(title).author(author).content(content).fileName(fileName).build();
-
+		
+		//업로드된 파일 이름 가져오기
+		String fileName=part.getSubmittedFileName();
+		
+		//업로드 될 절대경로 가져오기
+		String uploadPath = getServletContext().getRealPath("") +"static"+ File.separator+"img";
+		System.out.println(uploadPath);
+		
+		
+		 // 업로드 디렉토리 생성 (존재하지 않으면)
+        File uploadDir = new File(uploadPath);
+        if (!uploadDir.exists()) {
+            uploadDir.mkdir();
+        }
+        
+        Date today = new Date();
+		Locale currentLocale = new Locale("KOREAN", "KOREA");
+		String pattern = "yyyyMMddHHmmss";
+		
+		String img= uploadPath + File.separator + fileName+pattern;
+        part.write(img);
+        
+        response.getWriter().write("File uploaded successfully to: " +img);
+        
+		
+		Post post = Post.builder().title(title).author(author).content(content).fileName(fileName+pattern).build();
+		
 		log.debug("doPost(Post={})", post);
 		int result = postService.create(post);
 		response.sendRedirect(request.getContextPath() + "/post/list");
 	}
 
-	private String getFilename(Part part) {
-        String contentDisp = part.getHeader("content-disposition");
-        String[] split = contentDisp.split(";");
-        for (int i = 0; i < split.length; i++) {
-            String temp = split[i];
-            if (temp.trim().startsWith("filename")) {
-                return temp.substring(temp.indexOf("=") + 2, temp.length() - 1);
-            }
-        }
-        return "";
-    }
+
+    
 
 
 }

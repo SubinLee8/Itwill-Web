@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,11 +17,13 @@
     crossorigin="anonymous">
 </head>
 <body>
-    
+
     <%@include file="../fragments/header.jspf"%>
 
     <div class="card">
-        <div class="card-header mt-2"><h1>로그인</h1></div>
+        <div class="card-header mt-2">
+            <h1>로그인</h1>
+        </div>
         <div class="card-body">
             <c:url value="/user/signin" var="signInPage" />
             <form action="${signInPage }" method="post">
@@ -50,12 +52,15 @@
                         type="submit" value="로그인">
                 </div>
                 <div class="mt-2">
-                <c:url value="/user/signup" var="signUpPage">
+                    <c:url value="/user/signup" var="signUpPage">
                     </c:url>
-                <a href="${signUpPage }">회원가입</a></div>
+                    <a href="${signUpPage }">회원가입</a>
+                </div>
             </form>
-
+            
         </div>
+
+    </div>
     </div>
 
 
@@ -64,5 +69,6 @@
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+    <script src="/static/kakaoLogin.js"></script>
 </body>
 </html>

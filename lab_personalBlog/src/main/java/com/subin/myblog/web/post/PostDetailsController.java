@@ -33,6 +33,9 @@ public class PostDetailsController extends HttpServlet {
 		Integer id=Integer.parseInt(request.getParameter("id"));
 		Post post = postService.read(id);
 		request.setAttribute("post", post);
+		
+		//테스트
+		
 		request.getRequestDispatcher("/WEB-INF/views/post/details.jsp").forward(request, response);
 	}
 
