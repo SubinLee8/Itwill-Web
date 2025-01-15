@@ -25,8 +25,8 @@
             placeholder="제목 입력하세요" required autofocus> 
     </div>
         <div class="mt-2">
-        <input class="form-control"
-            type="text" name="author"  placeholder="작성자">
+        <input class="d-none"
+            type="text" name="author"  placeholder="작성자" value="${signedInUser}">
         </div>
        <div class="mt-2">
        <textarea class="form-control" name="content" placeholder="내용" cols="20" rows="5"></textarea>

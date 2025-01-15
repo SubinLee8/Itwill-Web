@@ -2,6 +2,9 @@ package com.itwill.spring2.web;
 
 
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.itwill.spring2.domain.Member;
+
 import com.itwill.spring2.dto.MemberSignInDto;
 import com.itwill.spring2.dto.MemberSignUpDto;
 import com.itwill.spring2.service.MemberService;
@@ -70,14 +73,27 @@ public class MemberController {
 	}
 	
 	@PostMapping("/signin")
-	public String signIn(MemberSignInDto dto, HttpSession session) {
+	public String signIn(MemberSignInDto dto, HttpSession session, @RequestParam(name="target", defaultValue ="") String target) throws UnsupportedEncodingException {
 		log.debug("signInUser(userDto={})",dto);
+		String targetPage=null;
+		
+		
 		if(memberService.checkLogIn(dto)!=null) {
+			//로그인 성공
+			log.debug("로그인 성공!!!!!!!!!!!!!!");
 			session.setAttribute("signedInUser", dto.getUsername());
-			return "redirect:/";
+			
+			//로그인 이후 이동할 페이지
+			//질의 문자열에 target이 없으면 홈페이지, target이 있으면 target페이지로 이동.
+			targetPage=target.equals("") ? "/" : target;
+			log.debug("targetPage={}",targetPage);
+			
 		}else {
-			return "redirect:/user/signin?result=f";
+			//로그인 실패
+			targetPage="/user/signin?result=f&target="+URLEncoder.encode(target,"UTF-8");
 		}
+		
+		return "redirect:"+targetPage;
 	}
 	
 	

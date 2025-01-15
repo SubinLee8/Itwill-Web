@@ -19,29 +19,34 @@
 <body>
     <c:url value="로그인" var="pageTitle" />
     <%@include file="../fragments/header.jspf"%>
-    
+
     <div class="card">
-        <div class="card-head">
-        
-        </div>
+        <div class="card-head"></div>
         <div class="card-body">
-        <c:url value="/user/signin" var="signInPage" />
-            <form action="${signInPage }" method="post">
-            <div class="mt-2">
-             <label  for="username">아이디</label>
-                <input class="form-control" type="text" name="username" id="username" required>
-            </div>
-               <div class="mt-2">
-                <label for="password">비밀번호</label>
-                <input class="form-control" type="text" name="password" id="password" required>
-               </div>
-               
-               
-               <div class="mt-2">
-                <input class="form-control  btn btn-outline-primary" type="submit" value="로그인">
-               </div>
+
+            <form method="post">
+                <div class="mt-2">
+                    <label for="username">아이디</label> <input
+                        class="form-control" type="text" name="username"
+                        id="username" required>
+                </div>
+                <div class="mt-2">
+                    <label for="password">비밀번호</label> <input
+                        class="form-control" type="text" name="password"
+                        id="password" required>
+                </div>
+                <c:if
+                    test="${not empty param.result && param.result eq 'f'}">
+                    <div class="text-danger mt-2">아이디와 패스워드를
+                        확인하세요.</div>
+                </c:if>
+
+                <div class="mt-2">
+                    <input class="form-control  btn btn-outline-primary"
+                        type="submit" value="로그인">
+                </div>
             </form>
-            
+
         </div>
     </div>
 

@@ -13,6 +13,7 @@ import com.itwill.spring2.domain.Post;
 import com.itwill.spring2.dto.PostCreateDto;
 import com.itwill.spring2.dto.PostSearchDto;
 import com.itwill.spring2.dto.PostUpdateDto;
+import com.itwill.spring2.service.CommentService;
 import com.itwill.spring2.service.PostService;
 
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,7 @@ import oracle.jdbc.proxy.annotation.GetProxy;
 //-> PostController 클래스의 모든 메서드의 매핑 주소는 "/post"로 시작.
 public class PostController {
 	private final PostService postService;
+	private final CommentService commentService;
 
 	@GetMapping("/list") // ->GET방식의 /post/list 주소를 처리하는 컨트롤러 메서드.
 	public void list(Model model) {
@@ -68,6 +70,7 @@ public class PostController {
 	@GetMapping("/delete")
 	public String delete(@RequestParam Integer id) {
 		log.debug("delete(postId={})",id);
+		commentService.deleteByPostId(id);
 		postService.delete(id);
 		return "redirect:/post/list";
 	}

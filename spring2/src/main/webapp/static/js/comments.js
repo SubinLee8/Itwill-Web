@@ -28,29 +28,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
         btnRegisterComment.addEventListener('click', registerComment);
     });
-    
+
     //부트스트랩 모달 객체 생성
-    const commentModal = new bootstrap.Modal('div#commentModal',{backdrop: true});
-    
+    const commentModal = new bootstrap.Modal('div#commentModal', { backdrop: true });
+
     //모달의 [저장] 버튼을 찾고, 클릭 이벤트 리스너를 설정.
     const btnUpdateComnt = document.querySelector('button#btnUpdateComnt');
-    btnUpdateComnt.addEventListener('click',updateComment);
+    btnUpdateComnt.addEventListener('click', updateComment);
 
     /*---------------------------------------------------   -----------
     콜백 함수 선언 */
-    
-    function updateComment(){
-        const id=document.querySelector("input#modalCommentId").value;
-        const ctext=document.querySelector("textarea#modalCommentText").value;
-        if(ctext==''){
+
+    function updateComment() {
+        const id = document.querySelector("input#modalCommentId").value;
+        const ctext = document.querySelector("textarea#modalCommentText").value;
+        if (ctext == '') {
             alert("댓글 내용을 반드시 입력하세요");
             return;
         }
-        const data={id,ctext};
-        axios.put(`../api/comment/${id}`,data).then((response)=>{
+        const data = { id, ctext };
+        axios.put(`../api/comment/${id}`, data).then((response) => {
             commentModal.hide();
             getALLComments();
-        }).catch((error)=>{
+        }).catch((error) => {
             console.log(error);
         });
     }
@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (response.data === 1) {
                 alert('댓글 1개 등록 성공');
                 document.querySelector('textarea#ctext').value = '';
-                
+
                 //업데이트된 내용을 보여준다.
                 getALLComments();
             }
@@ -125,8 +125,8 @@ document.addEventListener("DOMContentLoaded", () => {
         let html = '<ul class="list-group list-group-flush">'; //divComments 영역에 저장할 html 코드
         for (const comment of data) {
             //timestamp 를 date/time 포맷으로 변환
-            const modifiedTime=new Date(comment.modifiedTime).toLocaleString();
-            
+            const modifiedTime = new Date(comment.modifiedTime).toLocaleString();
+
             //of : 원소 value in: 원소 인덱스
             html += `<li class="list-group-item d-flex justify-content-between align-items-start">    
                  <div>         
@@ -134,80 +134,81 @@ document.addEventListener("DOMContentLoaded", () => {
                      <span>${comment.username}</span>
                      <span>${modifiedTime}</span> </div> 
                      <span>${comment.ctext}</span>
-                 </div>
-                 <div>
-                     <button class="btnDeleteComment btn btn-outline-danger btn-sm" data-id="${comment.id}">삭제</button>
-                     <button class="btnUpdateComment btn btn-outline-success btn-sm" data-id="${comment.id}">수정</button>
-                 </div>
-                 </li>`;
+                 </div>`;
+                if(signedInUser===comment.username){
+                    html += `<div>
+                    <button class="btnDeleteComment btn btn-outline-danger btn-sm" data-id="${comment.id}">삭제</button>
+                    <button class="btnUpdateComment btn btn-outline-success btn-sm" data-id="${comment.id}">수정</button>  
+                             </div>
+                                 </li>`; }
         }
-        html += '</ul>';
-        divComments.innerHTML = html;
-        
-        //html 코드가 div에 삽입된 후에 삭제,수정 버튼들을 찾을 수 있음.
-        //=> 이벤트 리스너를 설정할 수 있음.
-        //모든 댓글 삭제 버튼들을 찾아서 클릭 이벤트 리스너를 설정.
-        const btnDeletes = document.querySelectorAll("button.btnDeleteComment");
-        for(const btn of btnDeletes){
-            btn.addEventListener('click', deleteComment);
-        }
-        
-        const btnUpdates = document.querySelectorAll("button.btnUpdateComment");
-                for(const btn of btnUpdates){
-                    btn.addEventListener('click', showCommentModal);
-                }
+            html += '</ul>';
+            divComments.innerHTML = html;
+
+//html 코드가 div에 삽입된 후에 삭제,수정 버튼들을 찾을 수 있음.
+//=> 이벤트 리스너를 설정할 수 있음.
+//모든 댓글 삭제 버튼들을 찾아서 클릭 이벤트 리스너를 설정.
+const btnDeletes = document.querySelectorAll("button.btnDeleteComment");
+for (const btn of btnDeletes) {
+    btn.addEventListener('click', deleteComment);
+}
+
+const btnUpdates = document.querySelectorAll("button.btnUpdateComment");
+for (const btn of btnUpdates) {
+    btn.addEventListener('click', showCommentModal);
+}
     }
-    
-    function showCommentModal(event) {
-        const commentId = event.target.getAttribute('data-id');
-        //commentModal.show();
-        
-        //댓글 아이디로 댓글 1개 검색
-        axios.get(`../api/comment/${commentId}`).then((response)=>{
-            const ctext=response.data.ctext;
-            const inputId=document.querySelector("input#modalCommentId");
-            inputId.value=commentId;
-            const inputText=document.querySelector("textarea#modalCommentText");
-            inputText.innerHTML=ctext;
-            commentModal.show();
-        }
-        ).catch((error)=>{
-            console.log(error);
-        });
+
+function showCommentModal(event) {
+    const commentId = event.target.getAttribute('data-id');
+    //commentModal.show();
+
+    //댓글 아이디로 댓글 1개 검색
+    axios.get(`../api/comment/${commentId}`).then((response) => {
+        const ctext = response.data.ctext;
+        const inputId = document.querySelector("input#modalCommentId");
+        inputId.value = commentId;
+        const inputText = document.querySelector("textarea#modalCommentText");
+        inputText.innerHTML = ctext;
+        commentModal.show();
     }
-    
-    //댓글 삭제 버튼의 클릭 이벤트 리스너 
-    function deleteComment(event){
-        console.log(event.target);
-        
-        //모든 이벤트 리스너들은 event 객체를 아규먼트로 전달받음.
-        //이벤트 객체를 target 속성(이벤트가 발생한 html 요소)을 가지고 있음
-        
-        //HTML 요소의 속성(attribute)의 값을 찾음:
-        const commentId = event.target.getAttribute('data-id');
-        
-        const result=confirm("댓글을 삭제하시겠습니까?");
-        
-        if(!result){
-            return;
-        }else{
-            //Ajax 댓글 삭제 요청 REST API (요청 URI)
-                   const uri=`../api/comment/${commentId}`;
-                   
-                   //Ajax 요청을 보냄.
-                   axios
-                   .delete(uri).then((response)=>{
-                       console.log(response);
-                   }).catch((error)=>{
-                       console.log(error);
-                   });
-                   alert('댓글이 삭제됐습니다');
-                   
-                   getALLComments();
-        }
-        
+    ).catch((error) => {
+        console.log(error);
+    });
+}
+
+//댓글 삭제 버튼의 클릭 이벤트 리스너 
+function deleteComment(event) {
+    console.log(event.target);
+
+    //모든 이벤트 리스너들은 event 객체를 아규먼트로 전달받음.
+    //이벤트 객체를 target 속성(이벤트가 발생한 html 요소)을 가지고 있음
+
+    //HTML 요소의 속성(attribute)의 값을 찾음:
+    const commentId = event.target.getAttribute('data-id');
+
+    const result = confirm("댓글을 삭제하시겠습니까?");
+
+    if (!result) {
+        return;
+    } else {
+        //Ajax 댓글 삭제 요청 REST API (요청 URI)
+        const uri = `../api/comment/${commentId}`;
+
+        //Ajax 요청을 보냄.
+        axios
+            .delete(uri).then((response) => {
+                console.log(response);
+            }).catch((error) => {
+                console.log(error);
+            });
+        alert('댓글이 삭제됐습니다');
+
+        getALLComments();
     }
-    
+
+}
+
 
 
 })

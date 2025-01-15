@@ -65,11 +65,15 @@
             </div>
 
             <div class="card-footer d-flex justify-content-center">
-                <c:url value="/post/modify" var="postModifyPage">
-                    <c:param name="id" value="${post.id }" />
-                </c:url>
-                <a class="btn btn-outline-primary"
-                    href="${postModifyPage }">수정하기</a>
+
+                <c:if test="${post.author eq signedInUser}">
+                    <c:url value="/post/modify" var="postModifyPage">
+                        <c:param name="id" value="${post.id }" />
+                    </c:url>
+                    <a class="btn btn-outline-primary"
+                        href="${postModifyPage }">수정하기</a>
+                </c:if>
+
             </div>
         </div>
     </main>
@@ -86,7 +90,7 @@
                 <div class="row">
                     <div class="col-10">
                         <input class="d-none" id="username"
-                            value="guest" readonly />
+                            value="${signedInUser}" readonly />
                         <textarea class="form-control" rows="3"
                             id="ctext" placeholder="댓글 입력"></textarea>
                     </div>
@@ -137,6 +141,13 @@
     <!-- Axios Http Js -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <c:url value="/js/comments.js" var="commentsJs" />
+    
+    <script>
+       //세션에 저장된 로그인 사용자 아이디를 자바스크립트 변수에 저장.
+       //->comment.js 파일의 코드들에서 그 변수를 사용할 수 있도록 하기 위해서
+       const signedInUser='${signedInUser}';//문자열 포맷으로 변수를 저장.
+    </script>
+    
     <script src="${commentsJs}"></script>
 </body>
 </html>
