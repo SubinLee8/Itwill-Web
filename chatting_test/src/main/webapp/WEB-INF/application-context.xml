@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+        http://mybatis.org/schema/mybatis-spring https://mybatis.org/schema/mybatis-spring.xsd">
+
+    <!-- bean definitions here: 스프링프레임워크에서 생성하고 관리할 자바 객체들을 선언. -->
+
+
+    <!-- 스프링 컨테이너에서 컴포넌트 빈들을 검색할 기본 패키지를 설정. 
+    스프링 컨테이너가 베이스 패키지와 그 하위 패키지 들을 검색해서 component annotation이 붙어 있는(@Component, @Service,...)
+    가 설정된 클래스 객체들을 (싱글턴으로) 생성하고 관리하기 위해서. 
+    생성된 컴포넌트 빈들을 필요한 곳(컨트롤러 등)에 주입할 수 있도록.-->
+    <context:component-scan base-package="subin.test.chatting_test" />
+    
+
+</beans>
