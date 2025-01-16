@@ -22,14 +22,14 @@
 					// 「websocket」는 호스트 명      
 					// WebSocket 오브젝트 생성 (자동으로 접속 시작한다. - onopen 함수 호출)      
 					var webSocket = new WebSocket(
-							"ws://localhost:8080/chatting_test/websocket");
+							"ws://192.168.14.22:8080/chatting_test/websocket");
 					
 					// 콘솔 텍스트 에리어 오브젝트      
 					var messageTextArea = document
 							.getElementById("messageTextArea");
 					
 					// WebSocket 서버와 접속이 되면 호출되는 함수      
-					webSocket.onopen = function(message) {
+					webSocket.onopen = function(event) {
 						// 콘솔 텍스트에 메시지를 출력한다.        
 						messageTextArea.value += "Server connect...\n";
 					};
@@ -43,12 +43,14 @@
 						// 콘솔 텍스트에 메시지를 출력한다.        
 						messageTextArea.value += "error...\n";
 					};
+					
+					
 					// WebSocket 서버로 부터 메시지가 오면 호출되는 함수      
 					webSocket.onmessage = function(message) {
 						// 콘솔 텍스트에 메시지를 출력한다.        
 						messageTextArea.value += "Recieve From Server => "
 								+ message.data + "\n";
-					};
+					};  
 					
 					
 					
