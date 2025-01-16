@@ -85,20 +85,22 @@ public enum PostDao {
 			String content = rs.getString("CONTENT");
 			LocalDateTime createdTime = rs.getTimestamp("CREATED_TIME").toLocalDateTime();
 			LocalDateTime modifiedTime = rs.getTimestamp("MODIFIED_TIME").toLocalDateTime();
-			return Post.builder().id(id).title(title).content(content).createdTime(createdTime).modifiedTime(modifiedTime)
+			String fileName = rs.getString("FILE_NAME");
+			return Post.builder().id(id).title(title).content(content).createdTime(createdTime).modifiedTime(modifiedTime).fileName(fileName)
 					.author(author).build();
 		}
 
 		
 		// 포스트 저장(새 글 작성)에서 필요한 SQL 문장을 선언.
 
-		private static final String SQL_INSERT = String.format("insert into posts (title, author, content, created_time, modified_time) values(?, ?, ?, systimestamp, systimestamp)");
+		private static final String SQL_INSERT = String.format("insert into posts (title, author, content, created_time, modified_time, file_name) values(?, ?, ?, systimestamp, systimestamp,?)");
 
 		public int insert(Post post) {
 			int result=0;
 			String title=post.getTitle();
 			String author=post.getAuthor();
 			String content=post.getContent();
+			String fileName=post.getFileName();
 			
 			Connection conn=null;
 			PreparedStatement stmt=null;
@@ -108,6 +110,7 @@ public enum PostDao {
 				stmt.setString(1, title);
 				stmt.setString(2, author);
 				stmt.setString(3, content);
+				stmt.setString(4, fileName);
 				stmt.executeUpdate();
 				result=1;
 			} catch (SQLException e) {
@@ -169,7 +172,7 @@ public enum PostDao {
 			return result;
 		}
 		
-		private final String SQL_UPDATE_BY_ID = "update posts set title=?, content=?, modified_time=systimestamp where id=? ";
+		private final String SQL_UPDATE_BY_ID = "update posts set title=?, content=?, file_name=?, modified_time=systimestamp where id=? ";
 		public int update(Post post) {
 			int result=0;
 			Connection conn=null;
@@ -179,7 +182,8 @@ public enum PostDao {
 				stmt=conn.prepareStatement(SQL_UPDATE_BY_ID);
 				stmt.setString(1, post.getTitle());
 				stmt.setString(2, post.getContent());
-				stmt.setInt(3, post.getId());
+				stmt.setInt(4, post.getId());
+				stmt.setString(3, post.getFileName());
 				stmt.executeUpdate();
 				result=1;
 			} catch (SQLException e) {

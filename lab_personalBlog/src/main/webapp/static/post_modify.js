@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
             modifyForm.method = 'post'; //요청 방식을 post로 설정.
             modifyForm.action = 'modify'; //요청 주소를 localhost:8080/jsp2/post/modify
             modifyForm.submit(); //양식 데이터 제출
+           
         }
     });
 

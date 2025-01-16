@@ -24,8 +24,8 @@ public enum DataSourceUtil {
 		//커넥션 풀(데이터 소스)의 환경 설정.
 		config.setDriverClassName("oracle.jdbc.OracleDriver");
 		config.setJdbcUrl("jdbc:oracle:thin:@localhost:1521:xe");
-		config.setUsername("jspstudy");
-		config.setPassword("jspstudy");
+		config.setUsername("scott");
+		config.setPassword("tiger");
 		
 		//데이터 소스 객체 생성.
 		ds=new HikariDataSource(config);

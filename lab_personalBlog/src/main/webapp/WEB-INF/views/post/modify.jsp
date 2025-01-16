@@ -27,14 +27,12 @@
                 </div>
 
                 <div class="card-body">
-                    <form id="modifyForm">
+                    <form enctype="multipart/form-data" id="modifyForm">
 
                         <div class="mt-2 d-none">
                             <label class="form-label " for="id">번호</label>
                             <input class="form-control" name="id"
-                                id="id" type="text"
-                                value="${post.id
-                                }"
+                                id="id" type="text" value="${post.id}"
                                 readonly />
                         </div>
                         <div class="mt-2">
@@ -56,20 +54,35 @@
                             <textarea id="content" name="content"
                                 class="form-control" rows="5">${post.content}</textarea>
                         </div>
+                        <label class="form-label" for="presentPhoto">현재
+                            첨부 사진</label> <img id="presentPhoto"
+                            src="${post.fileName}">
 
+                        <div class="mt-2">
+                            <label for="file">바꿀 사진</label> <input
+                                type="file" accept="image/*"
+                                onchange="previewImage(event);"
+                                id="file" name="fileName"><br>
+                        </div>
+                        <img id="preview" src="" alt="Image Preview"
+                            style="display: none; width: 200px; height: 200px; margin-top: 10px;">
                     </form>
                 </div>
-               
-                <div class="card-footer">
-                    <c:if test="${post.author eq signedInUser }">
-                        <div class="d-flex justify-content-center">
-                            <button class="btn btn-outline-success"
-                                id="btnUpdate">업데이트</button>
-                        </div>
-                    </c:if>
-                </div>
+
+
+
             </div>
-        </main>
+
+            <div class="card-footer">
+                <c:if test="${post.author eq signedInUser }">
+                    <div class="d-flex justify-content-center">
+                        <button class="btn btn-outline-success"
+                            id="btnUpdate">업데이트</button>
+                    </div>
+                </c:if>
+            </div>
+    </div>
+    </main>
     </div>
 
 
@@ -80,6 +93,19 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
     <c:url value="/static/post_modify.js" var="postModifyJs" />
-    <script src=${postModifyJs}> </script>
+    <script src=${postModifyJs}>
+					
+				</script>
+    <script>
+					function previewImage(event) {
+						var reader = new FileReader();
+						reader.onload = function() {
+							var output = document.getElementById('preview');
+							output.src = reader.result;
+							output.style.display = 'block';
+						};
+						reader.readAsDataURL(event.target.files[0]);
+					}
+				</script>
 </body>
 </html>

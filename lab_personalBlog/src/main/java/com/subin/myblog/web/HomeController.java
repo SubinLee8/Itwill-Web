@@ -42,11 +42,14 @@ public class HomeController extends HttpServlet {
 		log.debug("doGet()");
 		List<Post> list=postService.read();
 		List<Post> previewList=new ArrayList<Post>();
-		for(int i=0;i<6;i++) {
-			previewList.add(list.get(i));
+		
+		if(list.size()>=6) {
+			for(int i=0;i<6;i++) {
+				previewList.add(list.get(i));
+				log.debug("{}",previewList);
+				request.setAttribute("list", previewList);
+			}
 		}
-		log.debug("{}",previewList);
-		request.setAttribute("list", previewList);
 		request.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(request, response);
 	}
 

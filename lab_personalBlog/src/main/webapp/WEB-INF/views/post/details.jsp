@@ -25,7 +25,7 @@
 
         <div class="mt-2">
             <label class="form-label" for="id">번호</label> <input
-                class="form-control" id="id" type="text"
+                class="form-control" name="id" id="id" type="text"
                 value="${post.id}" readonly />
         </div>
 
@@ -56,14 +56,15 @@
         </div>
         <div class="mt-2">
             <label class="form-label" for="img">첨부 파일</label>
-        
-            <!-- 
-            <c:set attribute value="/myblog/static/img/" var="dir" />
-            <c:set attribute value="${post.fileName}" var="file" />
-            <img id="img" src="${dir)${file}" /> 
-            -->
             
-        </div> 
+            <c:set value="${post.fileName}" var="file" />
+            <div class="mt-2">
+                <img id="img" src="${file}" />
+            </div>
+
+
+
+        </div>
         <div class="card-footer">
             <div class="d-flex justify-content-center">
 

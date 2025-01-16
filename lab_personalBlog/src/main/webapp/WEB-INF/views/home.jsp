@@ -59,21 +59,24 @@ div {
     <div class="container">
         <!-- Example row of columns -->
         <div class="row">
-            <c:forEach var="post" items="${list}">
-                <div class="col-md-4">
-                    <h2>${post.title }</h2>
-                    <p>${post.content}</p>
-                    <p>
-                        <c:url value="/post/details"
-                            var="postDetailPage">
-                            <c:param name="id" value="${post.id }" />
-                        </c:url>
-                        <a class="btn btn-secondary"
-                            href="${postDetailPage }" role="button">View
-                            details »</a>
-                    </p>
-                </div>
-            </c:forEach>
+            <c:if test="${not empty list }">
+                <c:forEach var="post" items="${list}">
+                    <div class="col-md-4">
+                        <h2>${post.title }</h2>
+                        <p>${post.content}</p>
+                        <p>
+                            <c:url value="/post/details"
+                                var="postDetailPage">
+                                <c:param name="id" value="${post.id }" />
+                            </c:url>
+                            <a class="btn btn-secondary"
+                                href="${postDetailPage }" role="button">View
+                                details »</a>
+                        </p>
+                    </div>
+                </c:forEach>
+            </c:if>
+
 
 
         </div>

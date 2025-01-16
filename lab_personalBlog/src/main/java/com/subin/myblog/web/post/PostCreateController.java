@@ -10,7 +10,10 @@ import jakarta.servlet.http.Part;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.Locale;
 
@@ -53,34 +56,31 @@ public class PostCreateController extends HttpServlet {
 		String author = request.getParameter("author");
 		String content = request.getParameter("content");
 		
-		//업로드된 파일의 part 가져오기
-		Part part = request.getPart("fileName");
+	
+		    // 업로드된 파일의 part 가져오기
 		
-		//업로드된 파일 이름 가져오기
-		String fileName=part.getSubmittedFileName();
+			Part part = request.getPart("fileName");
+
+			// 업로드된 파일 이름 가져오기
+			String fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
+
+			// 업로드 될 절대경로 가져오기
+			String uploadPath = "C:\\uploadTest";
+			System.out.println(uploadPath);
+
+			// 업로드 디렉토리 생성 (존재하지 않으면)
+			File uploadDir = new File(uploadPath);
+			if (!uploadDir.exists()) {
+				uploadDir.mkdir();
+			}
+			String filePath=uploadPath+File.separator+fileName;
+			part.write(filePath);
+			
+			String img = request.getContextPath() +"/uploadTest/"+  URLEncoder.encode(fileName,"UTF-8");
+
 		
-		//업로드 될 절대경로 가져오기
-		String uploadPath = getServletContext().getRealPath("") +"static"+ File.separator+"img";
-		System.out.println(uploadPath);
 		
-		
-		 // 업로드 디렉토리 생성 (존재하지 않으면)
-        File uploadDir = new File(uploadPath);
-        if (!uploadDir.exists()) {
-            uploadDir.mkdir();
-        }
-        
-        Date today = new Date();
-		Locale currentLocale = new Locale("KOREAN", "KOREA");
-		String pattern = "yyyyMMddHHmmss";
-		
-		String img= uploadPath + File.separator + fileName+pattern;
-        part.write(img);
-        
-        response.getWriter().write("File uploaded successfully to: " +img);
-        
-		
-		Post post = Post.builder().title(title).author(author).content(content).fileName(fileName+pattern).build();
+		Post post = Post.builder().title(title).author(author).content(content).fileName(img).build();
 		
 		log.debug("doPost(Post={})", post);
 		int result = postService.create(post);

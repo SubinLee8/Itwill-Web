@@ -126,7 +126,7 @@
             <artifactId>HikariCP</artifactId>
             <version>${hikaricp-version}</version>
         </dependency>
-        
+
         <!-- lombok: Spice up your java: Automatic Resource Management,
         automatic generation of getters, setters, equals, hashCode and toString,
         and more! -->
@@ -136,22 +136,34 @@
             <version>${lombok-version}</version>
         </dependency>
 
+        <!--
+        https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.4</version>
+        </dependency>
 
-    </dependencies>
+        <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.13.0</version>
+        </dependency>
 
-
+</dependencies>
     <build>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>3.13.0</version>
                 <configuration>
                     <release>21</release>
                 </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>3.2.3</version>
+                <version>3.4.0</version>
             </plugin>
         </plugins>
     </build>

@@ -48,8 +48,13 @@
                         </div>
                         <div class="mt-2">
                             <label for="file"> 파일</label> <input
-                                type="file" id="file" name="fileName"><br>
+                                type="file" accept="image/*"
+                                onchange="previewImage(event);"
+                                id="file" name="fileName"><br>
                         </div>
+                        <img id="preview" src="" alt="Image Preview" style="display:none; width: 200px; height: 200px; margin-top: 10px;">
+
+
                         <div class="mt-2 d-flex justify-content-end">
                             <input class="btn btn-outline-danger me-2"
                                 type="reset" value="취소" />
@@ -75,5 +80,19 @@
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+
+
+    <script>
+    function previewImage(event) {
+        var reader = new FileReader();
+        reader.onload = function(){
+            var output = document.getElementById('preview');
+            output.src = reader.result;
+            output.style.display = 'block';
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>
+	
 </body>
 </html>
