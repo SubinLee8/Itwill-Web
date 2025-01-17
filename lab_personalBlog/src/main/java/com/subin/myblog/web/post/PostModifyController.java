@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.UUID;
 
 import com.subin.myblog.domain.Post;
 import com.subin.myblog.service.PostService;
@@ -65,6 +66,10 @@ public class PostModifyController extends HttpServlet {
 
 		// 업로드된 파일 이름 가져오기
 		String fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
+		String extension = fileName.substring(fileName.lastIndexOf("."), fileName.length());
+		UUID uuid = UUID.randomUUID();
+
+		String newFileName = uuid.toString() + extension;
 
 		// 업로드 될 절대경로 가져오기
 		String uploadPath = "C:\\uploadTest";
@@ -74,14 +79,14 @@ public class PostModifyController extends HttpServlet {
 		if (!uploadDir.exists()) {
 			uploadDir.mkdir();
 		}
-		String filePath = uploadPath + File.separator + fileName;
+		String filePath = uploadPath + File.separator + newFileName;
 		part.write(filePath);
 
-		String img = request.getContextPath() + "/uploadTest/" + URLEncoder.encode(fileName, "UTF-8");
+		String img = request.getContextPath() + "/uploadTest/" + URLEncoder.encode(newFileName, "UTF-8");
 
 		Post post = Post.builder().title(title).id(id).content(content).fileName(img).build();
 		
-		int result = postService.update(post);
+		postService.update(post);
 
 		response.sendRedirect(request.getContextPath() + "/post/details?id=" + id);
 

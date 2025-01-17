@@ -59,7 +59,7 @@
             
             <c:set value="${post.fileName}" var="file" />
             <div class="mt-2">
-                <img id="img" src="${file}" />
+                <img id="img" src="${file}" width="400" height="400" />
             </div>
 
 

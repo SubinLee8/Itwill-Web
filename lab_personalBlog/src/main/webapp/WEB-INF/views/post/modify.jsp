@@ -56,7 +56,7 @@
                         </div>
                         <label class="form-label" for="presentPhoto">현재
                             첨부 사진</label> <img id="presentPhoto"
-                            src="${post.fileName}">
+                            src="${post.fileName}" width="200" height="200">
 
                         <div class="mt-2">
                             <label for="file">바꿀 사진</label> <input
