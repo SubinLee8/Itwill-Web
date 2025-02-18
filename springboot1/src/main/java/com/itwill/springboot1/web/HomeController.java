@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.itwill.springboot1.domain.Author;
 import com.itwill.springboot1.domain.Book;
@@ -62,7 +63,7 @@ public class HomeController {
 	}
 	
 	@GetMapping("/book/details/{id}")
-	public String bookDetailsWithPathVariable(Model model, Integer id) {
+	public String bookDetailsWithPathVariable(Model model, @PathVariable int id) {
 		log.info("details(id={})",id);
 		Book book = Book.builder().id(id).title("무제").build();
 		model.addAttribute("book", book);
