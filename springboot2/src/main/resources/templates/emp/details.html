@@ -23,10 +23,12 @@
             </tr>
             <tr>
                 <th>매니저</th>
+                <td>
                 <th:block th:if="*{manager != null}">
-                    <a th:href="@{/emp/details/{id}(id=*{id})}"
+                    <a th:href="@{/emp/details/{id}(id=*{manager.id})}"
                         th:text="*{manager.ename}"></a>
                 </th:block>
+                </td>
 
             </tr>
             <tr>
