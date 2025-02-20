@@ -1,10 +1,15 @@
 package com.itwill.springboot2.domain;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,6 +31,8 @@ import lombok.ToString;
 
 @NoArgsConstructor
 @Getter
+//엔터티 클래스가 setter 메소드를 가지고 있지 않아도, JPA/Hibernate 프레임워크는 Reflexion을 사용해서
+//private field 값들을 설정할 수 있다.
 @ToString
 @EqualsAndHashCode
 @Entity //DB의 테이블에 매핑되는 자바 객체
@@ -36,9 +43,22 @@ public class Employee {
 	private Integer id;
 	private String job;
 	private String ename;
-	private Integer mgr;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="mgr")
+	@ToString.Exclude
+	private Employee manager;
+	
+	
+	
 	private LocalDateTime hiredate;
-	private Double sal;
-	private Double comm;
-	private Integer deptno;
+	@Column(name="sal")
+	private Double salary;
+	@Column(name="comm")
+	private Double commision;
+	
+	@ToString.Exclude
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="deptno")
+	private Department department;
 }

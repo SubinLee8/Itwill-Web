@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>부서 목록</title>
+	</head>
+	<body>
+        <div th:replace="~{/layout/fragments :: pageHeader('부서 목록 페이지')}"></div>
+	   <table>
+        <thead>
+            <tr>
+                <th>부서번호</th>
+                <th>부서이름</th>
+                <th>위치</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each=" department : ${departments}" th:object="${department}">
+                <td><a th:text="*{id}" th:href="@{/dept/details(id=*{id})}"></a></td>
+                <td th:text="*{dname}"></td>
+                <td th:text="*{loc}"></td>
+            </tr>
+        </tbody>
+       </table>
+	</body>
+</html>
