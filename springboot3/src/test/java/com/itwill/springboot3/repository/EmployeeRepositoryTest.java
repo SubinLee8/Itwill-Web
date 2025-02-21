@@ -41,11 +41,18 @@ public class EmployeeRepositoryTest {
 		log.info("emp job {}", emp.getJob());
 	}
 	
-	@Test
+	//@Test
 	@Transactional
 	public void testJpaQueryMethods() {
-		List<Employee> list4 = empRepo.findByDepartmentName("Executive");
-		list4.forEach(System.out::println);
+		//List<Employee> list4 = empRepo.findByDepartmentName("Executive");
+		//list4.forEach(System.out::println);
 		
+	}
+	
+	@Test
+	@Transactional
+	public void jpqlTest() {
+		List<Employee> list=empRepo.findByDeptName("IT");
+		list.forEach(System.out::println);
 	}
 }
