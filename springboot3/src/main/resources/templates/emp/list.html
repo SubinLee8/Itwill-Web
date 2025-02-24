@@ -16,16 +16,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="emp : ${employees}" th:object="${emp}">
+                    <tr th:each="emp : ${page}" th:object="${emp}">
                         <td><a th:href="@{/emp/details(id=*{id})}" th:text="*{id}"></a></td>
                        <td><a th:href="@{/emp/details(id=*{id})}" th:text="|*{firstName} *{lastName}|"></a></td>
                         <td th:text="*{email}"></td>
                         <td th:text="*{phoneNumber}"></td>
-                        <td><a th:href="@{/dept/details(id=*{department.id})}" th:text="*{department != null} ? *{department.departmentName}"></a></td>
+                        <td><th:block th:if="*{department != null}"><a th:text="*{department != null} ? *{department.departmentName}" th:href="@{/dept/details(id=*{department.id})}"></a></th:block></td>
                     </tr>
                 </tbody>
             </table>
         </main>
+        
+        <th:block th:replace="~{/layout/fragments :: pagination}"></th:block>
         
         <th:block th:replace="~{/layout/fragments :: bootstrapJS}"></th:block>
     </body>

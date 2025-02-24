@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import java.util.List;
 
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -11,6 +12,7 @@ import org.springframework.data.repository.query.Param;
 import com.itwill.springboot3.domain.Employee;
 
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
+	
 	// JPA Query Method:
 	// JPA에서 미리 약속된 키워드들과 엔터티들의 필드 이름들을 사용해서
 	// 메서드 이름을 카멜 표기법으로 작성

@@ -37,6 +37,24 @@
         </nav>
     </th:block>
 
+    <th:block th:fragment="pagination">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <!-- 이전 페이지가 없을 때 'disabled' 클래스 속성을 추가 -->
+                <li class="page-item"
+                    th:classappend="*{!page.hasPrevious} ? 'disabled'"><a
+                    class="page-link" th:href="@{|?p=${page.number-1}|}">Previous</a></li>
+                <li class="page-item" th:classappend="${pageNo==page.number} ? 'active'"
+                    th:each="pageNo : ${#numbers.sequence(0, page.totalPages-1)}" th:if="${pageNo>=page.number-3 && pageNo<page.number+3}"><a
+                    class="page-link" th:href="@{|?p=${pageNo}|}"
+                    th:text="${pageNo +1}"></a></li>
+                <li class="page-item"
+                    th:classappend="*{!page.hasNext} ? 'disabled'"><a
+                    class="page-link" th:href="@{|?p=${page.number+1}|}">Next</a></li>
+            </ul>
+        </nav>
+    </th:block>
+
 
     <th:block th:fragment="bootstrapJS">
         <script

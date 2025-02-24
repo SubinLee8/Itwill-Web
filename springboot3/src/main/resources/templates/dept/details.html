@@ -12,20 +12,24 @@
                 <th>부서번호</th>
                 <th>부서이름</th>
                 <th>매니저</th>
-                <th>위치</th>
+                <th>도로주소</th>
+                <th>도시</th>
+                <th>주</th>
                 <th>국가</th>
             </tr>
         </thead>
         <tbody>
-            <tr th:object="${department}">
-                <td><a th:text="*{id}"
-                    th:href="@{/dept/details(id=*{id})}"></a></td>
+            <tr th:object="${dto}">
+                <td><a th:text="*{departmentId}"
+                    th:href="@{/dept/details(id=*{departmentId})}"></a></td>
                 <td th:text="*{departmentName}"></td>
                 <td><th:block th:if="*{manager != null}">
                         <a th:href="@{/emp/details(id=*{manager.id})}"
                             th:text="*{manager.firstName}"></a>
                     </th:block></td>
+                <td th:text="*{location.streetAddress}"></td>
                 <td th:text="*{location.city}"></td>
+                <td th:text="*{location.stateProvince}"></td>
                 <td th:text="*{location.country.countryName}"></td>
             </tr>
         </tbody>
@@ -43,7 +47,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr th:each="emp : ${employees}" th:object="${emp}">
+            <tr th:each="emp : ${dto.employees}" th:object="${emp}">
                 <td><a th:href="@{/emp/details(id=*{id})}"
                     th:text="*{id}"></a></td>
                 <td><a th:href="@{/emp/details(id=*{id})}" th:text="|*{firstName} *{lastName}|"></a></td>
