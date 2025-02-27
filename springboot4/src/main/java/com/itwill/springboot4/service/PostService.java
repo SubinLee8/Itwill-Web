@@ -50,11 +50,11 @@ public class PostService {
 	@Transactional(readOnly = true)
 	public Page<PostListItemDto> search(PostSearchDto dto, Sort sort) {
 		log.info("dto={}",dto);
-		Integer pageNo=dto.getP();
-		if(dto.getP()==null) {
-			pageNo=0;
-		}
-		Pageable pageable = PageRequest.of(pageNo, 10, sort);
+//		Integer pageNo=dto.getP();
+//		if(dto.getP()==null) {
+//			pageNo=0;
+//		}
+		Pageable pageable = PageRequest.of(dto.getP(), 10, sort);
 		log.info("pageable={}",pageable);
 		String category = dto.getCategory();
 		String keyword = dto.getKeyword();

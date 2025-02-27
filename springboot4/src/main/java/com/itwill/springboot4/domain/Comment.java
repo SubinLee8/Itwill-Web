@@ -11,6 +11,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,6 +24,8 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 @Getter
 @Entity
+@Builder
+@AllArgsConstructor(access=AccessLevel.PRIVATE)
 @Table(name = "comments")
 public class Comment extends BaseTimeEntity{
 	@Id
@@ -38,4 +43,9 @@ public class Comment extends BaseTimeEntity{
 	
 	@Basic(optional = false)
 	private String writer;
+	
+	public Comment update(String text) {
+		this.text=text;
+		return this;
+	}
 }
