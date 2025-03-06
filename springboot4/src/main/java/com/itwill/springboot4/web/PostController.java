@@ -2,6 +2,7 @@ package com.itwill.springboot4.web;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,7 +37,7 @@ public class PostController {
 		model.addAttribute("page", page);
 		model.addAttribute("baseUrl", "/post/list");
 	}
-
+	@PreAuthorize("hasRole('USER')") 
 	@PostMapping("/create")
 	public String createPost(PostCreateDto dto) {
 		Long id = postServ.createPost(dto);
@@ -51,7 +52,11 @@ public class PostController {
 		model.addAttribute("baseUrl", "/post/search");
 		return "/post/list";
 	}
-
+	
+	// @PreAuthorize: 컨트롤러 메서드가 실행되기 전에 인증(로그인 여부) 확인.
+	// @PostAuthorize: 컨트롤러 메서드가 실행된 후에 인증 확인.
+	//@PreAuthorize("isAuthenticated()") //-> 권한 상관없이 비밀번호와 이이디 확인
+	@PreAuthorize("hasRole('USER')") //권한이 유저인 사용자의 비밀번호와 아이디 확인
 	@GetMapping("/create")
 	public void toPostPage() {
 
@@ -62,7 +67,7 @@ public class PostController {
 		PostItemDto dto = postServ.readById(id);
 		model.addAttribute("post", dto);
 	}
-
+	
 	@GetMapping("/modify/{id}")
 	public String toModifyPage(@PathVariable Long id, Model model) {
 		PostItemDto dto = postServ.readById(id);

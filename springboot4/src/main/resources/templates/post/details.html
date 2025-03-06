@@ -6,8 +6,8 @@
     <th:block
         th:replace="~{/layout/fragments :: pageHeader('포스트 상세 페이지')}"></th:block>
     <main>
-        <div class="mt-2 card">
-            <div class="card-body" th:object="${post}">
+        <div class="mt-2 card"  th:object="${post}">
+            <div class="card-body">
                 <form>
                     <div class="mt-2">
                         <label class="form-label" for="id">번호</label> <input
@@ -45,7 +45,8 @@
                     </div>
                 </form>
             </div>
-            <div class="card-footer">
+            <!-- 작성자와 로그인 사용자가 일치하는 경우에만 [수정] 버튼을 보여줌 -->
+            <div class="card-footer"  th:if="*{author eq #authentication.name}">
                 <a class="btn btn-success form-control"
                     th:href="@{/post/modify/{id}(id=${post.id})}">수정하기</a>
             </div>
@@ -62,7 +63,7 @@
                     <textarea class="form-control" id="commentText"
                         rows="3" placeholder="댓글 입력"></textarea>
                     <input class="d-none" id="commentWriter"
-                        value="admin" readonly />
+                        th:value="${#authentication.name}" readonly />
                     <!-- TODO: 나중에 로그인 사용자 이름으로 변경 -->
                 </div>
                 <div class="col-2">

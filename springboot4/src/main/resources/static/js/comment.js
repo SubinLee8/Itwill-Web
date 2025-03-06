@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const textarea = document.querySelector(`textarea.commentText[data-id="${id}"]`);
 
         const text = textarea.value;
-        
+
         if (text.trim() === '') {
             alert('댓글 내용은 반드시 입력해야 합니다.');
             return;
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         try {
-            const response= await axios.put(`/api/comment/${id}`, { id, text });
+            const response = await axios.put(`/api/comment/${id}`, { id, text });
             console.log(response);
             alert('댓글이 수정되었습니다.');
             getAllComments(0);
@@ -143,6 +143,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function makeCommentElements({ content, page }) {
+        //로그인 사용자아이디 (네비게이션바에서 찾는다)
+        const authUser = document.querySelector('span#authenticatedUser').innerText;
+        console.log(authUser);
+
         //댓글 목록을 추가할 div요소
         const divComments = document.querySelector('div#divComments');
 
@@ -158,11 +162,15 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="mt-2">
                <div class="mt-2">
                  <textarea class="commentText form-control" data-id="${comment.id}">${comment.text}</textarea>
-               </div>
-               <div class="mt-2">
-                 <button class="btnDelete btn btn-outline-danger" data-id="${comment.id}">삭제</button>
-                 <button class="btnUpdate btn btn-outline-primary" data-id="${comment.id}">수정</button>
-               </div>
+               </div>`;
+
+            if (authUser == comment.writer) {
+                htmlStr += ` <div class="mt-2">
+                                <button class="btnDelete btn btn-outline-danger" data-id="${comment.id}">삭제</button>
+                                <button class="btnUpdate btn btn-outline-primary" data-id="${comment.id}">수정</button>
+                              </div>`;
+            }
+            htmlStr += `
             </div>
             </div>
             `;

@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PagedModel;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,10 +29,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequiredArgsConstructor
 @Controller
+
 @RequestMapping("/api/comment")
 public class CommentController {
 	private final CommentService commentService;
-
+	@PreAuthorize("hasRole('USER')") 
 	@GetMapping("/all/{postId}")
 	public ResponseEntity<PagedModel<Comment>> getCommentList(@PathVariable Long postId, 
 			@RequestParam(defaultValue = "0") int p){
@@ -39,19 +41,19 @@ public class CommentController {
 		Page<Comment> comments=commentService.readByPostId(postId, Sort.by("modifiedTime").descending(), p);
 		return ResponseEntity.ok(new PagedModel<>(comments));
 	}
-	
+	@PreAuthorize("hasRole('USER')") 
 	@PostMapping
 	public ResponseEntity<Comment> postComment(@RequestBody CommentRegisterDto dto){
 		Comment entity=commentService.create(dto);
 		return ResponseEntity.ok(entity);
 	}
-	
+	@PreAuthorize("hasRole('USER')") 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Long> deleteComment(@PathVariable Long id){
 		commentService.delete(id);
 		return ResponseEntity.ok(id);
 	}
-	
+	@PreAuthorize("hasRole('USER')") 
 	@PutMapping("/{id}")
 	public ResponseEntity<Long> updateComment(@PathVariable Long id, @RequestBody CommentUpdateDto dto) {
 		commentService.update(dto);

@@ -11,9 +11,9 @@
                 <label class="form-label" for="title">제목</label> <input
                     name="title" type="text" id="title" required>
             </div>
-            <div class="mt-2">
-                <label class="form-label" for="author">작성자</label><input
-                    name="author" id="author" type="text" required>
+            <div class="d-none">
+                <label class="form-label" for="author">작성자</label><input 
+                    name="author" id="author" type="text" th:value="${#authentication.name}">
             </div>
             <div class="mt-2">
                 <label class="form-label" for="content">내용</label>
